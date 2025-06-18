@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://bnr6yr3dmwv4l"]
+
+[ext_resource type="Texture2D" uid="uid://c4ow3oc8tcjkk" path="res://Assets/SmokeParticles/Black smoke/blackSmoke01.png" id="1_ugxht"]
+[ext_resource type="Script" uid="uid://cbc1k2wf8e0r1" path="res://Entities/Effects/bullet_strike.gd" id="2_wkc8e"]
+
+[sub_resource type="Curve" id="Curve_wkc8e"]
+_data = [Vector2(0, 0.0898877), 0.0, 0.0, 0, 0, Vector2(0.316177, 0.359551), 0.0, 0.0, 0, 0, Vector2(0.911765, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_lt1b6"]
+curve = SubResource("Curve_wkc8e")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_y10ha"]
+direction = Vector3(0, 1, 0)
+spread = 12.47
+initial_velocity_min = 0.2
+initial_velocity_max = 2.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_lt1b6")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dshif"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.486)
+albedo_texture = ExtResource("1_ugxht")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_bp6cy"]
+material = SubResource("StandardMaterial3D_dshif")
+
+[node name="BulletStrike" type="GPUParticles3D"]
+emitting = false
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_y10ha")
+draw_pass_1 = SubResource("QuadMesh_bp6cy")
+script = ExtResource("2_wkc8e")

@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjcqaqmk1sksf"]
+
+[ext_resource type="Script" uid="uid://b4q77w28aoby8" path="res://Entities/Utility/info_label.gd" id="1_20qgw"]
+[ext_resource type="Texture2D" uid="uid://uuumgpo3hdxq" path="res://Assets/UI Textures/Bullet.png" id="2_argf3"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_fo18l"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r388r"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("2_argf3")
+
+[node name="InfoLabel" type="Node3D"]
+script = ExtResource("1_20qgw")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+pixel_size = 0.0125
+text = "+100"
+
+[node name="Picture" type="MeshInstance3D" parent="Label3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.879762, 0, 0)
+mesh = SubResource("QuadMesh_fo18l")
+surface_material_override/0 = SubResource("StandardMaterial3D_r388r")

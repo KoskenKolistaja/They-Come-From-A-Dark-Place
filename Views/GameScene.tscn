@@ -1,0 +1,304 @@
+[gd_scene load_steps=30 format=3 uid="uid://cy8bymex7ky6p"]
+
+[ext_resource type="Script" uid="uid://cp3mbh8h06ikg" path="res://Views/game_scene.gd" id="1_psw44"]
+[ext_resource type="PackedScene" uid="uid://b0bkkr2phnoad" path="res://Entities/Player/Player.tscn" id="2_f34wj"]
+[ext_resource type="PackedScene" uid="uid://br7eavurfa1i5" path="res://Entities/Effects/bullet_tracer.tscn" id="5_twqrn"]
+[ext_resource type="PackedScene" uid="uid://bnr6yr3dmwv4l" path="res://Entities/Effects/bullet_strike.tscn" id="6_llbod"]
+[ext_resource type="PackedScene" uid="uid://c0edmfiurjqro" path="res://Entities/Weapons/Physical/bat_physical.tscn" id="7_ib8kx"]
+[ext_resource type="PackedScene" uid="uid://dn15mgb3hkpoq" path="res://Levels/level_2.tscn" id="7_psw44"]
+[ext_resource type="VoxelGIData" uid="uid://dc3317au1ji4s" path="res://Views/GameScene.VoxelGI_data.res" id="8_a24st"]
+[ext_resource type="PackedScene" uid="uid://bscm7wyx00akq" path="res://Entities/BulletCrate.tscn" id="8_ywry1"]
+[ext_resource type="PackedScene" uid="uid://cf8jxvxrj5s1h" path="res://Entities/StreetProps/park_bench.tscn" id="10_8cp3u"]
+[ext_resource type="PackedScene" uid="uid://c1yha5o1t6fne" path="res://Entities/Utility/follow_camera.tscn" id="11_qfby0"]
+[ext_resource type="Texture2D" uid="uid://s37lo3pt2ltw" path="res://Assets/Textures/sky_27_2k.png" id="12_jmjoa"]
+[ext_resource type="Script" uid="uid://dmc1lq5hpjfoq" path="res://Entities/UI Elements/hud.gd" id="15_8cp3u"]
+[ext_resource type="Texture2D" uid="uid://cio71vbcwxama" path="res://Assets/UI Textures/Zombie.png" id="15_tvcen"]
+[ext_resource type="FontFile" uid="uid://ctukk4xriiim6" path="res://Assets/Fonts/SuperDream-ax3vE.ttf" id="15_w75yg"]
+[ext_resource type="FontFile" uid="uid://c3bg5eudyr8k" path="res://Assets/Fonts/Sangyo-E4ywr.ttf" id="16_7dkg5"]
+[ext_resource type="PackedScene" uid="uid://cn6knnbou4yvu" path="res://Entities/UI Elements/player_hud.tscn" id="16_qfby0"]
+[ext_resource type="Texture2D" uid="uid://dk13cn7id2qr5" path="res://Assets/UI Textures/Heavytaur.png" id="17_v1d0s"]
+[ext_resource type="PackedScene" uid="uid://b06sl2ddtc1q7" path="res://Entities/Buildings/building_1.tscn" id="18_7w1dq"]
+[ext_resource type="PackedScene" uid="uid://clsa1jmhunrhk" path="res://Entities/StreetProps/vending_machine.tscn" id="19_7w1dq"]
+[ext_resource type="Script" uid="uid://b61j6udx88gja" path="res://Entities/Utility/enemy_spawner.gd" id="20_t7mwr"]
+[ext_resource type="PackedScene" uid="uid://cok7j6b0g0cvj" path="res://Entities/zombie.tscn" id="21_tvcen"]
+[ext_resource type="PackedScene" uid="uid://dwgvt727pycct" path="res://Entities/heavytaur_2.tscn" id="22_7dkg5"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wevbo"]
+panorama = ExtResource("12_jmjoa")
+
+[sub_resource type="Sky" id="Sky_ibmo8"]
+sky_material = SubResource("PanoramaSkyMaterial_wevbo")
+
+[sub_resource type="Environment" id="Environment_8cp3u"]
+background_mode = 2
+background_energy_multiplier = 0.8
+sky = SubResource("Sky_ibmo8")
+sky_rotation = Vector3(0, -3.14159, 0)
+glow_enabled = true
+glow_intensity = 0.6
+glow_strength = 0.8
+glow_bloom = 0.03
+glow_blend_mode = 1
+glow_hdr_threshold = 0.98
+
+[sub_resource type="Animation" id="Animation_qfby0"]
+resource_name = "DayToNight"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WorldEnvironment:environment:background_energy_multiplier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.8, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_8cp3u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WorldEnvironment:environment:sky:sky_material:energy_multiplier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WorldEnvironment:environment:background_energy_multiplier")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.8]
+}
+
+[sub_resource type="Animation" id="Animation_ibmo8"]
+resource_name = "daynight"
+length = 180.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WorldEnvironment:environment:sky:sky_material:energy_multiplier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 30, 90, 120, 180),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.0, 0.0, 0.0, 1.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qfby0"]
+_data = {
+&"DayToNight": SubResource("Animation_qfby0"),
+&"RESET": SubResource("Animation_8cp3u"),
+&"daynight": SubResource("Animation_ibmo8")
+}
+
+[node name="GameScene" type="Node3D" groups=["freezable"]]
+script = ExtResource("1_psw44")
+player = ExtResource("2_f34wj")
+crate = ExtResource("8_ywry1")
+
+[node name="SceneObjects" type="Node3D" parent="."]
+
+[node name="BulletTracer" parent="SceneObjects" instance=ExtResource("5_twqrn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05649, 0.499263, -0.462089)
+
+[node name="Level2" parent="SceneObjects" instance=ExtResource("7_psw44")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -30.9523)
+
+[node name="VoxelGI" type="VoxelGI" parent="SceneObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.679932, 5.94763, -16.1933)
+size = Vector3(172.099, 16.2654, 131.352)
+data = ExtResource("8_a24st")
+
+[node name="Camera3D" type="Camera3D" parent="SceneObjects"]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 11, 14, -4)
+size = 30.0
+
+[node name="ParkBench" parent="SceneObjects" instance=ExtResource("10_8cp3u")]
+transform = Transform3D(-0.61562, 0.777702, -0.127242, 4.31378e-08, 0.161466, 0.986878, 0.788043, 0.607542, -0.0994018, 5, 1.24178, 1)
+
+[node name="FollowCamera" parent="SceneObjects" instance=ExtResource("11_qfby0")]
+
+[node name="BulletStrike" parent="." instance=ExtResource("6_llbod")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="bat_physical" parent="." instance=ExtResource("7_ib8kx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7527, 1.4851, 1.46414)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 12, 17, 0)
+size = 30.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8cp3u")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qfby0")
+}
+autoplay = "RESET"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="CanvasLayer" groups=["hud"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("15_8cp3u")
+player_hud = ExtResource("16_qfby0")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HUD"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -216.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 500
+
+[node name="WaveNumber" type="Label" parent="CanvasLayer/HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -90.0
+offset_right = 90.0
+offset_bottom = 66.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("15_w75yg")
+theme_override_font_sizes/font_size = 56
+text = "WAVE 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HUD/WaveNumber"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -66.0
+offset_top = -13.21
+offset_right = 66.0
+offset_bottom = 50.79
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HUD/WaveNumber/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("15_tvcen")
+expand_mode = 1
+
+[node name="ZombiesNumber" type="Label" parent="CanvasLayer/HUD/WaveNumber/HBoxContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -1.79
+offset_right = 36.0
+offset_bottom = 25.21
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("16_7dkg5")
+theme_override_font_sizes/font_size = 26
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/HUD/WaveNumber/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("17_v1d0s")
+expand_mode = 1
+
+[node name="HeavytaursNumber" type="Label" parent="CanvasLayer/HUD/WaveNumber/HBoxContainer/TextureRect2"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -1.79
+offset_right = 36.0
+offset_bottom = 25.21
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("16_7dkg5")
+theme_override_font_sizes/font_size = 26
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ReadyUp" type="Label" parent="CanvasLayer/HUD"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -90.0
+offset_right = 90.0
+offset_bottom = 66.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("15_w75yg")
+theme_override_font_sizes/font_size = 56
+text = "READY UP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HUD"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_left = 51.0
+offset_top = 40.0
+offset_right = 91.0
+offset_bottom = 80.0
+
+[node name="VendingMachine" parent="." instance=ExtResource("19_7w1dq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.35034, 1, -20.9136)
+
+[node name="Building1" parent="." instance=ExtResource("18_7w1dq")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28, 1, -22)
+
+[node name="EnemySpawner" type="Node3D" parent="."]
+script = ExtResource("20_t7mwr")
+zombie = ExtResource("21_tvcen")
+heavytaur = ExtResource("22_7dkg5")
+
+[node name="EnemySpawnerTimer" type="Timer" parent="EnemySpawner"]
+wait_time = 196.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="EnemySpawner/EnemySpawnerTimer" to="." method="_on_enemy_spawner_timer_timeout"]

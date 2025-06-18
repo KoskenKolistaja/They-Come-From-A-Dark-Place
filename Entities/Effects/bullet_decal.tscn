@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://bee4nybmym3j7"]
+
+[ext_resource type="Texture2D" uid="uid://r8b80wf6m8le" path="res://Assets/Textures/BulletDecal.png" id="1_oya4o"]
+[ext_resource type="Texture2D" uid="uid://bk2slm7clkdi3" path="res://Assets/Textures/BulletDecalNormal.png" id="2_xhg6v"]
+[ext_resource type="Script" uid="uid://w5u64y7t83jn" path="res://Entities/Effects/bullet_decal.gd" id="3_xhg6v"]
+
+[node name="BulletDecal" type="Node3D"]
+script = ExtResource("3_xhg6v")
+
+[node name="Decal" type="Decal" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+size = Vector3(0.1, 0.2, 0.1)
+texture_albedo = ExtResource("1_oya4o")
+texture_normal = ExtResource("2_xhg6v")

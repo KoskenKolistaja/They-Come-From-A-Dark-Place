@@ -1,0 +1,192 @@
+[gd_scene load_steps=22 format=3 uid="uid://cy8bymex7ky6p"]
+
+[ext_resource type="Script" uid="uid://cp3mbh8h06ikg" path="res://Views/game_scene.gd" id="1_psw44"]
+[ext_resource type="PackedScene" uid="uid://b0bkkr2phnoad" path="res://Entities/Player.tscn" id="2_f34wj"]
+[ext_resource type="PackedScene" uid="uid://ckn8qv0xeeot" path="res://Entities/Weapons/Hand/Uzi.tscn" id="4_8cp3u"]
+[ext_resource type="PackedScene" uid="uid://br7eavurfa1i5" path="res://Entities/Effects/bullet_tracer.tscn" id="5_twqrn"]
+[ext_resource type="PackedScene" uid="uid://bnr6yr3dmwv4l" path="res://Entities/Effects/bullet_strike.tscn" id="6_llbod"]
+[ext_resource type="PackedScene" uid="uid://c0edmfiurjqro" path="res://Entities/Weapons/Physical/bat_physical.tscn" id="7_ib8kx"]
+[ext_resource type="PackedScene" uid="uid://dn15mgb3hkpoq" path="res://Levels/level_2.tscn" id="7_psw44"]
+[ext_resource type="VoxelGIData" uid="uid://dc3317au1ji4s" path="res://Views/GameScene.VoxelGI_data.res" id="8_a24st"]
+[ext_resource type="PackedScene" uid="uid://bscm7wyx00akq" path="res://Entities/Crate.tscn" id="8_ywry1"]
+[ext_resource type="PackedScene" uid="uid://dnxmj1ngyk3l2" path="res://Entities/StreetProps/mailbox.tscn" id="10_ibmo8"]
+[ext_resource type="PackedScene" uid="uid://c44ofle5h18qx" path="res://Entities/Utility/zombiespawner.tscn" id="11_a24st"]
+[ext_resource type="PackedScene" uid="uid://c1yha5o1t6fne" path="res://Entities/Utility/follow_camera.tscn" id="11_qfby0"]
+[ext_resource type="Texture2D" uid="uid://s37lo3pt2ltw" path="res://Assets/Textures/sky_27_2k.png" id="12_jmjoa"]
+[ext_resource type="PackedScene" uid="uid://bu636c4s434xd" path="res://Entities/StreetProps/street_light.tscn" id="13_wevbo"]
+[ext_resource type="PackedScene" uid="uid://cn6knnbou4yvu" path="res://Entities/UI Elements/player_hud.tscn" id="15_8cp3u"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wevbo"]
+panorama = ExtResource("12_jmjoa")
+
+[sub_resource type="Sky" id="Sky_ibmo8"]
+sky_material = SubResource("PanoramaSkyMaterial_wevbo")
+
+[sub_resource type="Environment" id="Environment_8cp3u"]
+background_mode = 2
+sky = SubResource("Sky_ibmo8")
+sky_rotation = Vector3(0, -3.14159, 0)
+glow_enabled = true
+glow_intensity = 0.6
+glow_strength = 0.8
+glow_bloom = 0.03
+glow_blend_mode = 1
+glow_hdr_threshold = 0.98
+
+[sub_resource type="Animation" id="Animation_8cp3u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WorldEnvironment:environment:sky:sky_material:energy_multiplier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="Animation" id="Animation_ibmo8"]
+resource_name = "daynight"
+length = 180.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WorldEnvironment:environment:sky:sky_material:energy_multiplier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 30, 90, 120, 180),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.0, 0.0, 0.0, 1.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qfby0"]
+_data = {
+&"RESET": SubResource("Animation_8cp3u"),
+&"daynight": SubResource("Animation_ibmo8")
+}
+
+[node name="GameScene" type="Node3D"]
+script = ExtResource("1_psw44")
+crate = ExtResource("8_ywry1")
+
+[node name="SceneObjects" type="Node3D" parent="."]
+
+[node name="Player" parent="SceneObjects" instance=ExtResource("2_f34wj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.46265)
+angular_damp = 20.202
+player_id = 1
+r_starting_weapon = ExtResource("4_8cp3u")
+l_starting_weapon = ExtResource("4_8cp3u")
+
+[node name="Player2" parent="SceneObjects" instance=ExtResource("2_f34wj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 3, -7.53735)
+angular_damp = 20.202
+r_starting_weapon = ExtResource("4_8cp3u")
+l_starting_weapon = ExtResource("4_8cp3u")
+
+[node name="Player3" parent="SceneObjects" instance=ExtResource("2_f34wj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1, 1.46265)
+angular_damp = 20.202
+player_id = 2
+r_starting_weapon = ExtResource("4_8cp3u")
+l_starting_weapon = ExtResource("4_8cp3u")
+
+[node name="BulletTracer" parent="SceneObjects" instance=ExtResource("5_twqrn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05649, 0.499263, -0.462089)
+
+[node name="Level2" parent="SceneObjects" instance=ExtResource("7_psw44")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -30.9523)
+
+[node name="VoxelGI" type="VoxelGI" parent="SceneObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.679932, 5.94763, -16.1933)
+size = Vector3(172.099, 16.2654, 131.352)
+data = ExtResource("8_a24st")
+
+[node name="StreetLight" parent="SceneObjects" instance=ExtResource("13_wevbo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, -21)
+
+[node name="StreetLight2" parent="SceneObjects" instance=ExtResource("13_wevbo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 1, -21)
+
+[node name="Mailbox" parent="SceneObjects" instance=ExtResource("10_ibmo8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, -21)
+
+[node name="Camera3D" type="Camera3D" parent="SceneObjects"]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 11, 14, -4)
+size = 30.0
+
+[node name="FollowCamera" parent="SceneObjects" instance=ExtResource("11_qfby0")]
+
+[node name="BulletStrike" parent="." instance=ExtResource("6_llbod")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="bat_physical" parent="." instance=ExtResource("7_ib8kx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7527, 0.247278, 1.46414)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="Zombiespawner" parent="." instance=ExtResource("11_a24st")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.04584, 0.999998, -17.6026)
+
+[node name="Zombiespawner2" parent="." instance=ExtResource("11_a24st")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.95416, 0.999998, -17.6026)
+
+[node name="Zombiespawner3" parent="." instance=ExtResource("11_a24st")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0458393, 0.999998, -17.6026)
+
+[node name="Zombiespawner4" parent="." instance=ExtResource("11_a24st")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.95416, 0.999998, -17.6026)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 12, 17, 0)
+size = 30.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8cp3u")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qfby0")
+}
+autoplay = "daynight"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HUD"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -216.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 300
+
+[node name="PlayerHUD" parent="CanvasLayer/HUD/HBoxContainer" instance=ExtResource("15_8cp3u")]
+layout_mode = 2
+
+[node name="PlayerHUD2" parent="CanvasLayer/HUD/HBoxContainer" instance=ExtResource("15_8cp3u")]
+layout_mode = 2
+
+[node name="PlayerHUD3" parent="CanvasLayer/HUD/HBoxContainer" instance=ExtResource("15_8cp3u")]
+layout_mode = 2
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

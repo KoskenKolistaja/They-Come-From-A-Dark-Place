@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=3 uid="uid://csotsybpend4w"]
+
+[ext_resource type="ArrayMesh" uid="uid://vbc6lu1r8dpj" path="res://Fencemesh.tres" id="1_5bxvy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmos8"]
+albedo_color = Color(0.589096, 0.589096, 0.589096, 1)
+metallic = 0.65
+roughness = 0.26
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_swknm"]
+material = SubResource("StandardMaterial3D_fmos8")
+top_radius = 0.03
+bottom_radius = 0.03
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5bxvy"]
+size = Vector3(4, 2, 0.2)
+
+[node name="Fence" type="Node3D"]
+
+[node name="Fence" type="Node3D" parent="."]
+
+[node name="Cube_001" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0183951, 0, 0, 0, -7.61466e-10, -0.0174203, 0, 0.0174203, -7.61466e-10, -1.89109, 0.104629, 0)
+mesh = ExtResource("1_5bxvy")
+skeleton = NodePath("")
+
+[node name="Cube_002" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0183951, 0, 0, 0, -7.61466e-10, -0.0174203, 0, 0.0174203, -7.61466e-10, 0.108905, 0.104629, 0)
+mesh = ExtResource("1_5bxvy")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 0)
+mesh = SubResource("CylinderMesh_swknm")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0)
+mesh = SubResource("CylinderMesh_swknm")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2.98023e-08)
+shape = SubResource("BoxShape3D_5bxvy")

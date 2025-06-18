@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://ytfefjo33h6x"]
+
+[ext_resource type="Script" uid="uid://bgxlvwr5ixyii" path="res://Entities/Utility/spawnpoint.gd" id="1_8xa2y"]
+[ext_resource type="PackedScene" uid="uid://dkxrcn7gxurbt" path="res://Entities/Utility/light_detector.tscn" id="2_lmu2b"]
+
+[node name="spawnpoint" type="Node3D" groups=["spawnpoint"]]
+script = ExtResource("1_8xa2y")
+light_detector = ExtResource("2_lmu2b")
+
+[node name="LightDetector" parent="." instance=ExtResource("2_lmu2b")]

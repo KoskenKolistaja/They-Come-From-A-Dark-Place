@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://br7eavurfa1i5"]
+
+[ext_resource type="Script" uid="uid://dnql38k2a2nk1" path="res://Entities/Effects/bullet_tracer.gd" id="1_naier"]
+
+[sub_resource type="Gradient" id="Gradient_jgmhh"]
+offsets = PackedFloat32Array(0.015873, 0.47619, 0.484127, 0.928571)
+colors = PackedColorArray(1, 0.560784, 0, 0, 1, 0.560784, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_naier"]
+gradient = SubResource("Gradient_jgmhh")
+height = 256
+fill_from = Vector2(0.531579, 1)
+fill_to = Vector2(0.512821, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jgmhh"]
+transparency = 1
+cull_mode = 2
+albedo_texture = SubResource("GradientTexture2D_naier")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.4
+emission_texture = SubResource("GradientTexture2D_naier")
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_naier"]
+material = SubResource("StandardMaterial3D_jgmhh")
+size = 0.02
+sections = 2
+section_length = 0.5
+section_segments = 1
+
+[node name="BulletTracer" type="Node3D" groups=["freezable"]]
+script = ExtResource("1_naier")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1.31134e-07, -1, 0, 1, 1.31134e-07, 0, 0, -0.499562)
+mesh = SubResource("RibbonTrailMesh_naier")

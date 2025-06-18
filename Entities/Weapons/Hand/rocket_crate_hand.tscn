@@ -1,0 +1,116 @@
+[gd_scene load_steps=23 format=3 uid="uid://bg7a17c2j1uiu"]
+
+[ext_resource type="Script" uid="uid://tw87255j8pkf" path="res://Entities/Weapons/Hand/rocket_crate_hand.gd" id="1_6xyx0"]
+[ext_resource type="Texture2D" uid="uid://wmeubmn0fqgs" path="res://Assets/Textures/wood_planks_12_1k/wood_planks_12_color_1k.png" id="2_oanbs"]
+[ext_resource type="Texture2D" uid="uid://bkvltvjey4xh6" path="res://Assets/Textures/wood_planks_12_1k/wood_planks_12_ambient_occlusion_1k.png" id="3_1nvwk"]
+[ext_resource type="Texture2D" uid="uid://d06jbw8kcg1hw" path="res://Assets/Textures/wood_planks_12_1k/wood_planks_12_height_1k.png" id="4_d38i0"]
+[ext_resource type="Texture2D" uid="uid://cmxgqga60ruaf" path="res://Assets/Textures/wood_planks_12_1k/wood_planks_12_normal_gl_1k.png" id="5_vx5p2"]
+[ext_resource type="Texture2D" uid="uid://buo7o8rx3rvph" path="res://Assets/Textures/wood_planks_12_1k/wood_planks_12_roughness_1k.png" id="6_2nsgo"]
+[ext_resource type="Texture2D" uid="uid://uuumgpo3hdxq" path="res://Assets/UI Textures/Bullet.png" id="7_qvarb"]
+[ext_resource type="Texture2D" uid="uid://b65wl04kvi616" path="res://Assets/UI Textures/Rocket.png" id="8_oanbs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d6i7e"]
+albedo_texture = ExtResource("2_oanbs")
+roughness_texture = ExtResource("6_2nsgo")
+normal_enabled = true
+normal_scale = 2.0
+normal_texture = ExtResource("5_vx5p2")
+ao_enabled = true
+ao_texture = ExtResource("3_1nvwk")
+heightmap_enabled = true
+heightmap_scale = 2.0
+heightmap_deep_parallax = true
+heightmap_min_layers = 8
+heightmap_max_layers = 32
+heightmap_flip_tangent = true
+heightmap_texture = ExtResource("4_d38i0")
+
+[sub_resource type="BoxMesh" id="BoxMesh_dtg8q"]
+material = SubResource("StandardMaterial3D_d6i7e")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="QuadMesh" id="QuadMesh_2kgt8"]
+size = Vector2(0.4, 0.4)
+
+[sub_resource type="Gradient" id="Gradient_4erl6"]
+offsets = PackedFloat32Array(0, 0.451613, 1)
+colors = PackedColorArray(1, 1, 1, 0.478431, 0.89, 0.89, 0.8455, 0.513726, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3ncdm"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_183yt"]
+color_ramp = SubResource("Gradient_4erl6")
+noise = SubResource("FastNoiseLite_3ncdm")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dtg8q"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = SubResource("NoiseTexture2D_183yt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lspv"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("7_qvarb")
+
+[sub_resource type="QuadMesh" id="QuadMesh_6q6oh"]
+material = SubResource("StandardMaterial3D_0lspv")
+size = Vector2(0.4, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1nvwk"]
+resource_local_to_scene = true
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("8_oanbs")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_d38i0"]
+load_path = "res://.godot/imported/Bullet.png-24384a6dc6f67108eff0b4e5a7fa7454.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vx5p2"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = SubResource("CompressedTexture2D_d38i0")
+
+[sub_resource type="QuadMesh" id="QuadMesh_2nsgo"]
+material = SubResource("StandardMaterial3D_vx5p2")
+size = Vector2(0.4, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y5k0m"]
+resource_local_to_scene = true
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("8_oanbs")
+
+[node name="RocketCrateHand" type="Node3D"]
+script = ExtResource("1_6xyx0")
+
+[node name="Handle" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Handle"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("BoxMesh_dtg8q")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Handle/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.251602)
+mesh = SubResource("QuadMesh_2kgt8")
+surface_material_override/0 = SubResource("StandardMaterial3D_dtg8q")
+
+[node name="pic1" type="MeshInstance3D" parent="Handle/MeshInstance3D/MeshInstance3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.00186145)
+mesh = SubResource("QuadMesh_6q6oh")
+surface_material_override/0 = SubResource("StandardMaterial3D_1nvwk")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Handle/MeshInstance3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -0.252)
+mesh = SubResource("QuadMesh_2kgt8")
+surface_material_override/0 = SubResource("StandardMaterial3D_dtg8q")
+
+[node name="pic2" type="MeshInstance3D" parent="Handle/MeshInstance3D/MeshInstance3D3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.00186145)
+mesh = SubResource("QuadMesh_2nsgo")
+surface_material_override/0 = SubResource("StandardMaterial3D_y5k0m")

@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkxrcn7gxurbt"]
+
+[ext_resource type="Script" uid="uid://cmjpru8x1qt44" path="res://light_detector.gd" id="1_v3b6q"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_sf465"]
+top_radius = 0.0
+bottom_radius = 4.421
+
+[node name="LightDetector" type="Node3D"]
+script = ExtResource("1_v3b6q")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+render_target_update_mode = 1
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2.75342, 0)
+current = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41003, 0)
+mesh = SubResource("CylinderMesh_sf465")

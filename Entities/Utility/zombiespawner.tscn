@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://c44ofle5h18qx"]
+
+[ext_resource type="Script" uid="uid://vmu1xsoqf8bk" path="res://Entities/Utility/zombiespawner.gd" id="1_8td7e"]
+[ext_resource type="PackedScene" uid="uid://cok7j6b0g0cvj" path="res://Entities/zombie.tscn" id="2_jsy4r"]
+[ext_resource type="PackedScene" uid="uid://dwgvt727pycct" path="res://Entities/heavytaur_2.tscn" id="3_nicon"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_8td7e"]
+top_radius = 0.25
+height = 0.25
+
+[node name="Zombiespawner" type="Node3D" groups=["spawner"]]
+script = ExtResource("1_8td7e")
+zombie = ExtResource("2_jsy4r")
+heavytaur = ExtResource("3_nicon")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
+mesh = SubResource("CylinderMesh_8td7e")
+
+[node name="Timer2" type="Timer" parent="."]
+wait_time = 50.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timer2" to="." method="_on_timer_2_timeout"]

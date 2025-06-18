@@ -1,0 +1,12 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://b2gjfkjedwfla"]
+
+[ext_resource type="Texture2D" uid="uid://c86j0fibygymk" path="res://Assets/Materials/RustyMetal/RustyMetal_albedo.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://b2i5ole3kjcye" path="res://Assets/Materials/RustyMetal/RustyMetal_orm.png" id="2"]
+
+[resource]
+albedo_color = Color(1, 0.407246, 0.338652, 1)
+albedo_texture = ExtResource("1")
+roughness_texture = ExtResource("2")
+roughness_texture_channel = 1
+uv1_scale = Vector3(0.39, 0.39, 0.39)
+uv1_triplanar = true

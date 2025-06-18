@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1yha5o1t6fne"]
+
+[ext_resource type="Script" uid="uid://jiokfwyypnn3" path="res://Entities/Utility/follow_camera.gd" id="1_kogrl"]
+
+[node name="FollowCamera" type="Node3D" groups=["freezable"]]
+script = ExtResource("1_kogrl")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.707107, -0.353553, 0.612372, -7.71341e-09, 0.866026, 0.5, -0.707107, -0.353553, 0.612372, 8, 6, 8)
+cull_mask = 1048063
+current = true
