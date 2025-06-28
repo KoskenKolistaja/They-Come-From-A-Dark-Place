@@ -204,7 +204,7 @@ func get_hit(damage: int = 1):
 
 func delete():
 	var r_number = randf_range(0,5)
-	
+	change_state(STATE.DEAD)
 	await get_tree().create_timer(r_number).timeout
 	Audio.assign_sound(death_sounds,-20.0)
 	spawn_ragdoll()
@@ -219,7 +219,7 @@ func die():
 	if killer:
 		killer.add_money(award_money)
 		killer.update_hud_money()
-	
+	change_state(STATE.DEAD)
 	spawn_ragdoll()
 	#$CollisionShape3D.disabled = true
 	#var rand_int = randi_range(1,3)
@@ -243,12 +243,19 @@ func _on_target_timer_timeout():
 
 
 func spawn_ragdoll():
+	
+	
 	var skeleton: Skeleton3D = $zombie/Armature/Skeleton3D
-	var corpse_instance = corpse.instantiate()
+	var corpse_instance = $ZombieCorpse
+	
+	if not skeleton:
+		return
+	
 	corpse_instance.global_transform = global_transform
 	
 	if impact:
 		corpse_instance.impact = impact
+		$ImpactArea.global_position = impact["collision_point"]
 	
 	get_tree().current_scene.add_child(corpse_instance)
 	corpse_instance.set_color(color)
@@ -267,11 +274,26 @@ func spawn_ragdoll():
 	
 	await get_tree().physics_frame
 	
+	apply_impact_to_bones()
+	
+	$ZombieCorpse.show()
+	$zombie.queue_free()
+	
+	await get_tree().create_timer(50).timeout
+	
 	
 	queue_free()
 
 
-
+func apply_impact_to_bones():
+	var bones = $ImpactArea.get_overlapping_bodies()
+	print(bones)
+	
+	for bone in bones:
+		var impulse_vector = impact["direction"] * impact["strength"]
+		var point = impact["collision_point"]
+		
+		bone.apply_impulse(impulse_vector,point)
 
 func transfer_named_bones(animated_skeleton: Skeleton3D, corpse_skeleton: Skeleton3D, bone_map: Dictionary) -> void:
 	for anim_bone_name in bone_map.keys():
@@ -293,7 +315,9 @@ func transfer_named_bones(animated_skeleton: Skeleton3D, corpse_skeleton: Skelet
 
 
 func _on_audio_timer_timeout():
-	Audio.assign_sound(idle_sounds,-20.0)
+	
+	$AudioStreamPlayer3D.stream = idle_sounds
+	$AudioStreamPlayer3D.play()
 	
 	$AudioTimer.wait_time = randi_range(2,15)
 	$AudioTimer.start()

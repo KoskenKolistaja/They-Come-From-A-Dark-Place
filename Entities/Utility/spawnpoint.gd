@@ -22,7 +22,6 @@ func test_light():
 	
 	light_level = $LightDetector.get_light_level()
 	
-	print(light_level)
 	
 	
 	return light_level

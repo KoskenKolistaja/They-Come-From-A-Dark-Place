@@ -3,7 +3,7 @@ extends Node
 
 var players = []
 
-var wave_number = 1
+var wave_number = 2
 
 var zombie_waves = [0,50,75,100,150,200,300,400,500,750,1000,1100,1200,1300,1400,1500,1600,1700,1800,1900]
 var heavytaur_waves = [0,0,0,0,0,0,1,1,1,1,2,4,6,10,12,15,20,22,26,40,60,100]

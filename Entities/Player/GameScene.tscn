@@ -1,30 +1,32 @@
-[gd_scene load_steps=30 format=3 uid="uid://cy8bymex7ky6p"]
+[gd_scene load_steps=32 format=3 uid="uid://cy8bymex7ky6p"]
 
-[ext_resource type="Script" uid="uid://cp3mbh8h06ikg" path="res://Views/game_scene.gd" id="1_psw44"]
-[ext_resource type="PackedScene" uid="uid://b0bkkr2phnoad" path="res://Entities/Player/Player.tscn" id="2_f34wj"]
-[ext_resource type="PackedScene" uid="uid://br7eavurfa1i5" path="res://Entities/Effects/bullet_tracer.tscn" id="5_twqrn"]
-[ext_resource type="PackedScene" uid="uid://bnr6yr3dmwv4l" path="res://Entities/Effects/bullet_strike.tscn" id="6_llbod"]
-[ext_resource type="PackedScene" uid="uid://c0edmfiurjqro" path="res://Entities/Weapons/Physical/bat_physical.tscn" id="7_ib8kx"]
-[ext_resource type="PackedScene" uid="uid://dn15mgb3hkpoq" path="res://Levels/level_2.tscn" id="7_psw44"]
-[ext_resource type="VoxelGIData" uid="uid://dc3317au1ji4s" path="res://Views/GameScene.VoxelGI_data.res" id="8_a24st"]
-[ext_resource type="PackedScene" uid="uid://bscm7wyx00akq" path="res://Entities/BulletCrate.tscn" id="8_ywry1"]
-[ext_resource type="PackedScene" uid="uid://cf8jxvxrj5s1h" path="res://Entities/StreetProps/park_bench.tscn" id="10_8cp3u"]
-[ext_resource type="PackedScene" uid="uid://c1yha5o1t6fne" path="res://Entities/Utility/follow_camera.tscn" id="11_qfby0"]
-[ext_resource type="Texture2D" uid="uid://s37lo3pt2ltw" path="res://Assets/Textures/sky_27_2k.png" id="12_jmjoa"]
-[ext_resource type="Script" uid="uid://dmc1lq5hpjfoq" path="res://Entities/UI Elements/hud.gd" id="15_8cp3u"]
-[ext_resource type="Texture2D" uid="uid://cio71vbcwxama" path="res://Assets/UI Textures/Zombie.png" id="15_tvcen"]
-[ext_resource type="FontFile" uid="uid://ctukk4xriiim6" path="res://Assets/Fonts/SuperDream-ax3vE.ttf" id="15_w75yg"]
-[ext_resource type="FontFile" uid="uid://c3bg5eudyr8k" path="res://Assets/Fonts/Sangyo-E4ywr.ttf" id="16_7dkg5"]
-[ext_resource type="PackedScene" uid="uid://cn6knnbou4yvu" path="res://Entities/UI Elements/player_hud.tscn" id="16_qfby0"]
-[ext_resource type="Texture2D" uid="uid://dk13cn7id2qr5" path="res://Assets/UI Textures/Heavytaur.png" id="17_v1d0s"]
-[ext_resource type="PackedScene" uid="uid://b06sl2ddtc1q7" path="res://Entities/Buildings/building_1.tscn" id="18_7w1dq"]
-[ext_resource type="PackedScene" uid="uid://clsa1jmhunrhk" path="res://Entities/StreetProps/vending_machine.tscn" id="19_7w1dq"]
-[ext_resource type="Script" uid="uid://b61j6udx88gja" path="res://Entities/Utility/enemy_spawner.gd" id="20_t7mwr"]
-[ext_resource type="PackedScene" uid="uid://cok7j6b0g0cvj" path="res://Entities/zombie.tscn" id="21_tvcen"]
-[ext_resource type="PackedScene" uid="uid://dwgvt727pycct" path="res://Entities/heavytaur_2.tscn" id="22_7dkg5"]
+[ext_resource type="Script" uid="uid://cp3mbh8h06ikg" path="res://Views/game_scene.gd" id="1_yjsti"]
+[ext_resource type="PackedScene" uid="uid://b0bkkr2phnoad" path="res://Entities/Player/Player.tscn" id="2_bqjg1"]
+[ext_resource type="PackedScene" uid="uid://bscm7wyx00akq" path="res://Entities/BulletCrate.tscn" id="3_g21l2"]
+[ext_resource type="PackedScene" uid="uid://br7eavurfa1i5" path="res://Entities/Effects/bullet_tracer.tscn" id="4_ab8yo"]
+[ext_resource type="PackedScene" uid="uid://dn15mgb3hkpoq" path="res://Levels/level_2.tscn" id="5_ynhsl"]
+[ext_resource type="VoxelGIData" uid="uid://dc3317au1ji4s" path="res://Views/GameScene.VoxelGI_data.res" id="6_7seny"]
+[ext_resource type="PackedScene" uid="uid://cf8jxvxrj5s1h" path="res://Entities/StreetProps/park_bench.tscn" id="7_7fmek"]
+[ext_resource type="PackedScene" uid="uid://c1yha5o1t6fne" path="res://Entities/Utility/follow_camera.tscn" id="8_tfuqd"]
+[ext_resource type="PackedScene" uid="uid://bnr6yr3dmwv4l" path="res://Entities/Effects/bullet_strike.tscn" id="9_cbijq"]
+[ext_resource type="PackedScene" uid="uid://c0edmfiurjqro" path="res://Entities/Weapons/Physical/bat_physical.tscn" id="10_ocj4x"]
+[ext_resource type="Texture2D" uid="uid://s37lo3pt2ltw" path="res://Assets/Textures/sky_27_2k.png" id="11_o1t1c"]
+[ext_resource type="Script" uid="uid://dmc1lq5hpjfoq" path="res://Entities/UI Elements/hud.gd" id="12_246cu"]
+[ext_resource type="PackedScene" uid="uid://cn6knnbou4yvu" path="res://Entities/UI Elements/player_hud.tscn" id="13_mr7uk"]
+[ext_resource type="FontFile" uid="uid://ctukk4xriiim6" path="res://Assets/Fonts/SuperDream-ax3vE.ttf" id="14_ltnwq"]
+[ext_resource type="Texture2D" uid="uid://cio71vbcwxama" path="res://Assets/UI Textures/Zombie.png" id="15_jqpsh"]
+[ext_resource type="FontFile" uid="uid://c3bg5eudyr8k" path="res://Assets/Fonts/Sangyo-E4ywr.ttf" id="16_nmgbf"]
+[ext_resource type="Texture2D" uid="uid://dk13cn7id2qr5" path="res://Assets/UI Textures/Heavytaur.png" id="17_8xrq1"]
+[ext_resource type="PackedScene" uid="uid://clsa1jmhunrhk" path="res://Entities/StreetProps/vending_machine.tscn" id="18_0g7pa"]
+[ext_resource type="PackedScene" uid="uid://b06sl2ddtc1q7" path="res://Entities/Buildings/building_1.tscn" id="19_eh1bi"]
+[ext_resource type="Script" uid="uid://b61j6udx88gja" path="res://Entities/Utility/enemy_spawner.gd" id="20_02lyu"]
+[ext_resource type="PackedScene" uid="uid://cok7j6b0g0cvj" path="res://Entities/zombie.tscn" id="21_xvaq8"]
+[ext_resource type="PackedScene" uid="uid://dwgvt727pycct" path="res://Entities/heavytaur_2.tscn" id="22_i8gjj"]
+[ext_resource type="PackedScene" uid="uid://ckn8qv0xeeot" path="res://Entities/Weapons/Hand/Uzi.tscn" id="23_bqjg1"]
+[ext_resource type="PackedScene" uid="uid://bda680irauldm" path="res://Entities/Weapons/Hand/Revolver.tscn" id="24_g21l2"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wevbo"]
-panorama = ExtResource("12_jmjoa")
+panorama = ExtResource("11_o1t1c")
 
 [sub_resource type="Sky" id="Sky_ibmo8"]
 sky_material = SubResource("PanoramaSkyMaterial_wevbo")
@@ -109,36 +111,36 @@ _data = {
 }
 
 [node name="GameScene" type="Node3D" groups=["freezable"]]
-script = ExtResource("1_psw44")
-player = ExtResource("2_f34wj")
-crate = ExtResource("8_ywry1")
+script = ExtResource("1_yjsti")
+player = ExtResource("2_bqjg1")
+crate = ExtResource("3_g21l2")
 
 [node name="SceneObjects" type="Node3D" parent="."]
 
-[node name="BulletTracer" parent="SceneObjects" instance=ExtResource("5_twqrn")]
+[node name="BulletTracer" parent="SceneObjects" instance=ExtResource("4_ab8yo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05649, 0.499263, -0.462089)
 
-[node name="Level2" parent="SceneObjects" instance=ExtResource("7_psw44")]
+[node name="Level2" parent="SceneObjects" instance=ExtResource("5_ynhsl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -30.9523)
 
 [node name="VoxelGI" type="VoxelGI" parent="SceneObjects"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.679932, 5.94763, -16.1933)
 size = Vector3(172.099, 16.2654, 131.352)
-data = ExtResource("8_a24st")
+data = ExtResource("6_7seny")
 
 [node name="Camera3D" type="Camera3D" parent="SceneObjects"]
 transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 11, 14, -4)
 size = 30.0
 
-[node name="ParkBench" parent="SceneObjects" instance=ExtResource("10_8cp3u")]
+[node name="ParkBench" parent="SceneObjects" instance=ExtResource("7_7fmek")]
 transform = Transform3D(-0.61562, 0.777702, -0.127242, 4.31378e-08, 0.161466, 0.986878, 0.788043, 0.607542, -0.0994018, 5, 1.24178, 1)
 
-[node name="FollowCamera" parent="SceneObjects" instance=ExtResource("11_qfby0")]
+[node name="FollowCamera" parent="SceneObjects" instance=ExtResource("8_tfuqd")]
 
-[node name="BulletStrike" parent="." instance=ExtResource("6_llbod")]
+[node name="BulletStrike" parent="." instance=ExtResource("9_cbijq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 
-[node name="bat_physical" parent="." instance=ExtResource("7_ib8kx")]
+[node name="bat_physical" parent="." instance=ExtResource("10_ocj4x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7527, 1.4851, 1.46414)
 
 [node name="Timer" type="Timer" parent="."]
@@ -166,8 +168,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("15_8cp3u")
-player_hud = ExtResource("16_qfby0")
+script = ExtResource("12_246cu")
+player_hud = ExtResource("13_mr7uk")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HUD"]
 layout_mode = 1
@@ -191,7 +193,7 @@ offset_left = -90.0
 offset_right = 90.0
 offset_bottom = 66.0
 grow_horizontal = 2
-theme_override_fonts/font = ExtResource("15_w75yg")
+theme_override_fonts/font = ExtResource("14_ltnwq")
 theme_override_font_sizes/font_size = 56
 text = "WAVE 1"
 horizontal_alignment = 1
@@ -216,7 +218,7 @@ alignment = 1
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/HUD/WaveNumber/HBoxContainer"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-texture = ExtResource("15_tvcen")
+texture = ExtResource("15_jqpsh")
 expand_mode = 1
 
 [node name="ZombiesNumber" type="Label" parent="CanvasLayer/HUD/WaveNumber/HBoxContainer/TextureRect"]
@@ -232,7 +234,7 @@ offset_right = 36.0
 offset_bottom = 25.21
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("16_7dkg5")
+theme_override_fonts/font = ExtResource("16_nmgbf")
 theme_override_font_sizes/font_size = 26
 text = "99"
 horizontal_alignment = 1
@@ -241,7 +243,7 @@ vertical_alignment = 1
 [node name="TextureRect2" type="TextureRect" parent="CanvasLayer/HUD/WaveNumber/HBoxContainer"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-texture = ExtResource("17_v1d0s")
+texture = ExtResource("17_8xrq1")
 expand_mode = 1
 
 [node name="HeavytaursNumber" type="Label" parent="CanvasLayer/HUD/WaveNumber/HBoxContainer/TextureRect2"]
@@ -257,7 +259,7 @@ offset_right = 36.0
 offset_bottom = 25.21
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("16_7dkg5")
+theme_override_fonts/font = ExtResource("16_nmgbf")
 theme_override_font_sizes/font_size = 26
 text = "99"
 horizontal_alignment = 1
@@ -272,7 +274,7 @@ offset_left = -90.0
 offset_right = 90.0
 offset_bottom = 66.0
 grow_horizontal = 2
-theme_override_fonts/font = ExtResource("15_w75yg")
+theme_override_fonts/font = ExtResource("14_ltnwq")
 theme_override_font_sizes/font_size = 56
 text = "READY UP"
 horizontal_alignment = 1
@@ -286,19 +288,24 @@ offset_top = 40.0
 offset_right = 91.0
 offset_bottom = 80.0
 
-[node name="VendingMachine" parent="." instance=ExtResource("19_7w1dq")]
+[node name="VendingMachine" parent="." instance=ExtResource("18_0g7pa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.35034, 1, -20.9136)
 
-[node name="Building1" parent="." instance=ExtResource("18_7w1dq")]
+[node name="Building1" parent="." instance=ExtResource("19_eh1bi")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28, 1, -22)
 
 [node name="EnemySpawner" type="Node3D" parent="."]
-script = ExtResource("20_t7mwr")
-zombie = ExtResource("21_tvcen")
-heavytaur = ExtResource("22_7dkg5")
+script = ExtResource("20_02lyu")
+zombie = ExtResource("21_xvaq8")
+heavytaur = ExtResource("22_i8gjj")
 
 [node name="EnemySpawnerTimer" type="Timer" parent="EnemySpawner"]
 wait_time = 196.0
+
+[node name="Player" parent="." instance=ExtResource("2_bqjg1")]
+player_id = 1
+r_starting_weapon = ExtResource("23_bqjg1")
+l_starting_weapon = ExtResource("24_g21l2")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="EnemySpawner/EnemySpawnerTimer" to="." method="_on_enemy_spawner_timer_timeout"]

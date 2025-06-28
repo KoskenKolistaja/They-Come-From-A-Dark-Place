@@ -93,8 +93,10 @@ func check_for_hit():
 				var start_point = ray.global_position
 				var end_point = $Handle/Cube/EndPoint.global_position
 				
-				dic = {"start_point" : start_point , "end_point" : end_point , "strength" : 10, "killer": player}
+				var direction = (end_point - start_point).normalized()
 				
+				#dic = {"start_point" : start_point , "end_point" : end_point , "strength" : 10, "killer": player}
+				dic = {"collision_point": collision_point, "direction": direction, "strength" : 10, "killer": player}
 				
 				collider.store_impact(dic)
 			

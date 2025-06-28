@@ -97,7 +97,6 @@ func spawn_info_label(text,type: int,time: float = 2.0):
 	var label_instance = info_label.instantiate()
 	if type:
 		label_instance.type = type
-		print(label_instance.type)
 	label_instance.text = text
 	label_instance.time = time
 	get_tree().current_scene.add_child(label_instance)

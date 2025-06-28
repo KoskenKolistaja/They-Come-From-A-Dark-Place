@@ -1,4 +1,4 @@
-extends RigidBody3D
+extends CharacterBody3D
 
 
 @export var player_id: int
@@ -12,14 +12,14 @@ extends RigidBody3D
 
 
 const JUMP_STRENGTH = 200
-const SPEED = 1000
+const SPEED = 1
 
 
 var animation_vector = Vector2.ZERO
 
 var flashlight_on = false
 
-var bullets = 20
+var bullets = 20000
 var rockets = 1
 var money = 500
 
@@ -33,9 +33,6 @@ func _physics_process(delta):
 
 
 func _ready():
-	#$Camera3D.current = true
-	
-	#print("Player ID is: " + str(player_id))
 	
 	
 	if r_starting_weapon:
@@ -54,8 +51,7 @@ func _ready():
 	update_hud_health()
 
 
-func _integrate_forces(state):
-	state.linear_velocity = state.linear_velocity.limit_length(20)
+
 
 
 func add_money(amount):
@@ -281,7 +277,7 @@ func clear_left_hand():
 func handle_movement():
 	
 	if Input.is_action_just_pressed("p%d_jump" % player_id):
-		apply_central_impulse(Vector3.UP * JUMP_STRENGTH)
+		velocity.y += 1 * JUMP_STRENGTH
 	
 	
 	
@@ -292,11 +288,15 @@ func handle_movement():
 	
 	var vector = Vector3(x,0,y)
 	
+	vector = vector.rotated(Vector3.UP,rad_to_deg(-45))
+	
+	vector *= -1
+	
 	if vector.length() > 0.1:
-		var speed_ratio = 1/(linear_velocity.length()+0.1)
-		apply_central_force(vector * SPEED * speed_ratio)
+		velocity = vector * SPEED
 	else:
-		constant_force = Vector3.ZERO
+		velocity.x = 0
+		velocity.z = 0
 	
 	var rx = Input.get_joy_axis(player_id-1,JOY_AXIS_RIGHT_X)
 	var ry = Input.get_joy_axis(player_id-1,JOY_AXIS_RIGHT_Y)
@@ -314,7 +314,7 @@ func handle_movement():
 				$Visual/Pivot2.rotation_degrees.x += -ry * 1.5
 			pass
 	
-	var desired_animation_vector:Vector2 = -Vector2(x,-y)
+	var desired_animation_vector:Vector2 = -Vector2(vector.x,-vector.y)
 	
 	if desired_animation_vector.length() > 0.1:
 		animation_vector = animation_vector.move_toward(desired_animation_vector,0.1)
@@ -325,10 +325,14 @@ func handle_movement():
 	
 	
 	
-	var end_vector = animation_vector.rotated(angle)
+	var end_vector = animation_vector.rotated(angle + deg_to_rad(-45))
 	
 	
 	$Visual/Suitman/AnimationTree.set("parameters/Walk/blend_position", end_vector)
+	
+	move_and_slide()
+
+
 
 func move_camera():
 	var desired = self.global_position + Vector3(0,4,4)

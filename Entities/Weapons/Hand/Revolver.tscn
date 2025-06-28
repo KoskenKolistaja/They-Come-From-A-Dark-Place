@@ -221,7 +221,7 @@ decal = ExtResource("4_37ose")
 transform = Transform3D(-6.28617e-07, 3.56499e-06, -1, 0.984807, 0.173651, 0, 0.173651, -0.984807, -3.61999e-06, 0, 0, 0)
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Handle"]
-transform = Transform3D(9.5424e-07, 0.972314, 0.233683, 8.39053e-08, 0.233683, -0.972314, -1, 9.47427e-07, 1.41408e-07, 0.0579313, 0.886105, 0.0342251)
+transform = Transform3D(9.5424e-07, 0.972314, 0.233683, 8.39048e-08, 0.233683, -0.972314, -1, 9.47427e-07, 1.41408e-07, 0.0236661, 0.723469, 0.0342245)
 emitting = false
 lifetime = 0.1
 one_shot = true
@@ -242,7 +242,7 @@ mesh = SubResource("ArrayMesh_vcs4l")
 skeleton = NodePath("")
 
 [node name="RayCast3D" type="RayCast3D" parent="Handle/Cube"]
-transform = Transform3D(-2.18557e-08, 0.00872621, 0.499924, 0, 0.499924, -0.00872621, -0.5, -3.81435e-10, -2.18524e-08, -0.259224, 0.087267, -6.61742e-05)
+transform = Transform3D(-2.18558e-08, 0.00872621, 0.499924, 7.10543e-14, 0.499924, -0.00872621, -0.5, -3.8137e-10, -2.18523e-08, -0.309, 0.089, 0)
 target_position = Vector3(0, 0, -30)
 collision_mask = 3
 

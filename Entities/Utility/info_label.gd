@@ -15,10 +15,8 @@ func _ready():
 		$Label3D/Picture.show()
 		if type == 1:
 			set_pic(true)
-			print("mentii bulletiin")
 		elif type == 2:
 			set_pic(false)
-			print("mentii rockettii")
 	
 	
 	

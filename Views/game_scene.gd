@@ -108,7 +108,6 @@ func end_wave():
 func start_wave():
 	wave_running = true
 	day_to_night()
-	print("Zombie amount: " + str(MetaData.zombie_waves[MetaData.wave_number]))
 	$EnemySpawner.update_enemies()
 	$EnemySpawner/EnemySpawnerTimer.wait_time = 206
 	$EnemySpawner/EnemySpawnerTimer.start()

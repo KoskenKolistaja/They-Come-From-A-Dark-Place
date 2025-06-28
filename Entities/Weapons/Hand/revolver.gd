@@ -23,16 +23,20 @@ func action():
 		loaded = false
 		$Timer.start()
 		check_for_hit()
-		spawn_trace()
 		player.bullets -= 1
 		player.update_hud_ammo()
 
-func spawn_trace():
-	var direction = $Handle/Cube/RayCast3D.global_transform.basis.z.normalized() * -1
+func spawn_trace(collision_point):
+	var ray_start = $Handle/GPUParticles3D.global_position
+	var ray_end = to_global($Handle/Cube/RayCast3D.get_target_position())
+	var direction = (ray_end - ray_start).normalized()
 	var tracer_instance = tracer.instantiate()
-	tracer_instance.direction = direction.normalized()
-	tracer_instance.global_transform = $Handle/Cube/RayCast3D.global_transform
-	tracer_instance.scale = Vector3(2,2,2)
+	if collision_point:
+		tracer_instance.end_point = collision_point
+	tracer_instance.direction = direction
+	tracer_instance.global_transform = $Handle/GPUParticles3D.global_transform
+	tracer_instance.tracer_scale = Vector3(3,3,1)
+	tracer_instance.look_at_from_position($Handle/Cube/RayCast3D.global_position,$Handle/Cube/RayCast3D.global_position + direction)
 	get_tree().current_scene.add_child(tracer_instance)
 
 func spawn_strike(spawn_position):
@@ -55,9 +59,12 @@ func check_for_hit():
 	var collision_point = ray.get_collision_point()
 	var normal = ray.get_collision_normal()
 	
+	
+	spawn_trace(collision_point)
 	if not collider:
 		return
 	else:
+		
 		spawn_strike($Handle/Cube/RayCast3D.get_collision_point())
 		if collider.has_method("get_hit"):
 			
@@ -69,8 +76,9 @@ func check_for_hit():
 				
 				var start_point = ray.global_position
 				var end_point = $Handle/Cube/EndPoint.global_position
+				var direction = (end_point - start_point).normalized()
 				
-				dic = {"start_point" : start_point , "end_point" : end_point , "strength" : 10, "killer": player}
+				dic = {"collision_point": collision_point, "direction": direction, "strength" : 30, "killer": player}
 				
 				
 				collider.store_impact(dic)

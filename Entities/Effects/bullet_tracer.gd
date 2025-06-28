@@ -5,6 +5,9 @@ var direction: Vector3
 
 var end_point
 
+var tracer_scale = null
+
+
 const SPEED = 3
 
 
@@ -12,8 +15,11 @@ func _ready():
 	if not direction:
 		queue_free()
 	
+	if tracer_scale:
+		$MeshInstance3D.scale = tracer_scale
 	
-	await get_tree().create_timer(0.5).timeout
+	
+	await get_tree().create_timer(1).timeout
 	queue_free()
 
 func _physics_process(delta):
