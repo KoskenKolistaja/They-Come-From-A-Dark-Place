@@ -25,3 +25,5 @@ func action(caller):
 		money_amount -= price
 		caller.set_money(money_amount)
 		caller.update_money()
+		
+		$AudioStreamPlayer.play()

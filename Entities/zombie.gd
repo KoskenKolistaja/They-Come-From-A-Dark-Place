@@ -280,6 +280,8 @@ func spawn_ragdoll():
 	$zombie.queue_free()
 	$Area3D.queue_free()
 	$ImpactArea.queue_free()
+	$AudioTimer.queue_free()
+	$TargetTimer.queue_free()
 	
 	await get_tree().create_timer(50).timeout
 	

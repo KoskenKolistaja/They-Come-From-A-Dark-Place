@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=4 uid="uid://bip8257tn0imy"]
+[gd_scene load_steps=19 format=4 uid="uid://bip8257tn0imy"]
 
 [ext_resource type="Texture2D" uid="uid://ct2ixxrhnvrym" path="res://Assets/Textures/metal_plates_01_1k/metal_plates_01_1k/metal_plates_01_normal_gl_1k.png" id="1_birhg"]
 [ext_resource type="Script" uid="uid://2edm5codqb8t" path="res://Entities/StreetProps/PayPhone.gd" id="2_1ni6f"]
-[ext_resource type="PackedScene" uid="uid://bscm7wyx00akq" path="res://Entities/BulletCrate.tscn" id="3_birhg"]
+[ext_resource type="PackedScene" uid="uid://bjcqaqmk1sksf" path="res://Entities/Utility/info_label.tscn" id="3_birhg"]
+[ext_resource type="AudioStream" uid="uid://b4jf0vmmwed1" path="res://Assets/SFX/CashRegister.ogg" id="4_1ni6f"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fajw1"]
 resource_name = "Material.001"
@@ -274,9 +275,16 @@ spot_angle = 60.28
 [node name="StaticBody3D" type="StaticBody3D" parent="." groups=["interactable"]]
 collision_layer = 257
 script = ExtResource("2_1ni6f")
-crate = ExtResource("3_birhg")
+info_label = ExtResource("3_birhg")
 text = "Buy Bullets 100$"
+type = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0032959, 0.886475, 0.09198)
 shape = SubResource("BoxShape3D_oq1s0")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="StaticBody3D"]
+stream = ExtResource("4_1ni6f")
+
+[node name="InfoPos" type="Node3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.18062, 0.459935)

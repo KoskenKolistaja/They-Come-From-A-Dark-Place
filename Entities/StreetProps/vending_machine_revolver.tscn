@@ -1,9 +1,10 @@
-[gd_scene load_steps=23 format=4 uid="uid://dkmi2rhcmxf3r"]
+[gd_scene load_steps=24 format=4 uid="uid://dkmi2rhcmxf3r"]
 
 [ext_resource type="Texture2D" uid="uid://1fvcaqf6ofqh" path="res://Assets/Textures/rusty_metal_03_nor_gl_1k.jpg" id="1_iafpu"]
 [ext_resource type="Texture2D" uid="uid://b4gokit3ukb6r" path="res://Assets/Textures/Don Simeon Sano Et Mä Riitän.jpg" id="2_jc1n0"]
 [ext_resource type="Script" uid="uid://bmg5c0fgxc8wy" path="res://Entities/StreetProps/VendingMachine.gd" id="3_jhbqy"]
 [ext_resource type="PackedScene" uid="uid://r5or1e1gjxga" path="res://Entities/Weapons/Physical/revolver_physical.tscn" id="4_iafpu"]
+[ext_resource type="AudioStream" uid="uid://b4jf0vmmwed1" path="res://Assets/SFX/CashRegister.ogg" id="5_jc1n0"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qted4"]
 resource_name = "Material"
@@ -353,6 +354,9 @@ shape = SubResource("ConcavePolygonShape3D_p0x8v")
 
 [node name="SpawnSpot" type="Node3D" parent="StaticBody3D"]
 transform = Transform3D(-4.37114e-08, 0, -1, 0.866025, 0.5, -3.78552e-08, 0.5, -0.866025, -2.18557e-08, 0, 0.38101, 0.397268)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="StaticBody3D"]
+stream = ExtResource("5_jc1n0")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.9882, 0.392039)
