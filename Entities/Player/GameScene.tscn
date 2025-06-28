@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cy8bymex7ky6p"]
+[gd_scene load_steps=34 format=3 uid="uid://cy8bymex7ky6p"]
 
 [ext_resource type="Script" uid="uid://cp3mbh8h06ikg" path="res://Views/game_scene.gd" id="1_yjsti"]
 [ext_resource type="PackedScene" uid="uid://b0bkkr2phnoad" path="res://Entities/Player/Player.tscn" id="2_bqjg1"]
@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://dwgvt727pycct" path="res://Entities/heavytaur_2.tscn" id="22_i8gjj"]
 [ext_resource type="PackedScene" uid="uid://ckn8qv0xeeot" path="res://Entities/Weapons/Hand/Uzi.tscn" id="23_bqjg1"]
 [ext_resource type="PackedScene" uid="uid://bda680irauldm" path="res://Entities/Weapons/Hand/Revolver.tscn" id="24_g21l2"]
+[ext_resource type="PackedScene" uid="uid://b33uqvkonguaq" path="res://Entities/Weapons/Physical/bazooka_physical.tscn" id="25_ab8yo"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wevbo"]
 panorama = ExtResource("11_o1t1c")
@@ -315,6 +316,9 @@ l_starting_weapon = ExtResource("24_g21l2")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 shape = SubResource("WorldBoundaryShape3D_g21l2")
+
+[node name="BazookaPhysical" parent="." instance=ExtResource("25_ab8yo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43039, 1.2488, -5.91726)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="EnemySpawner/EnemySpawnerTimer" to="." method="_on_enemy_spawner_timer_timeout"]

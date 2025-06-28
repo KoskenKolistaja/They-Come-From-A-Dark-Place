@@ -21,7 +21,7 @@ var animation_vector = Vector2.ZERO
 var flashlight_on = false
 
 var bullets = 20000
-var rockets = 1
+var rockets = 100
 var money = 500
 
 var hp = 100

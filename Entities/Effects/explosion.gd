@@ -1,8 +1,13 @@
 extends GPUParticles3D
 
+const impact_strength = 20
 
+var player
+
+@export var explosion_sound: AudioStream
 
 func _ready():
+	Audio.assign_sound(explosion_sound)
 	emitting = true
 	$Flash.emitting = true
 	$Fire.emitting = true
@@ -14,6 +19,21 @@ func _ready():
 	
 	var bodies = $Area3D.get_overlapping_bodies()
 	for b in bodies:
+		if b.has_method("store_impact"):
+			var dic = {}
+			
+			var start_point = self.global_position
+			var end_point = b.global_position
+			
+			var direction = (end_point - start_point).normalized()
+			
+			#dic = {"start_point" : start_point , "end_point" : end_point , "strength" : 10, "killer": player}
+			dic = {"collision_point": b.global_position + Vector3.UP, "direction": direction, "strength" : impact_strength, "killer": player}
+			
+			
+			
+			
+			b.store_impact(dic)
 		if b.has_method("get_hit"):
 			b.get_hit(10)
 		elif b.has_method("apply_impulse"):

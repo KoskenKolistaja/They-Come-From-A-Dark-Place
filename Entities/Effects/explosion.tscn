@@ -1,8 +1,11 @@
-[gd_scene load_steps=29 format=3 uid="uid://4y05f3dpwvee"]
+[gd_scene load_steps=33 format=3 uid="uid://4y05f3dpwvee"]
 
 [ext_resource type="Texture2D" uid="uid://crm2jucjlq28x" path="res://Assets/fx/Flare00.PNG" id="1_4i30t"]
 [ext_resource type="Material" uid="uid://joeh7yiyobf4" path="res://Resources/flash.tres" id="2_d04qs"]
 [ext_resource type="Script" uid="uid://bvdo0wtmkbl6g" path="res://Entities/Effects/explosion.gd" id="2_tb6py"]
+[ext_resource type="AudioStream" uid="uid://gtsedeioubc6" path="res://Assets/SFX/explosion_1.mp3" id="3_tbrvm"]
+[ext_resource type="AudioStream" uid="uid://cg81nfi0g4f6j" path="res://Assets/SFX/explosion_2.mp3" id="4_s61ym"]
+[ext_resource type="AudioStream" uid="uid://cnafafqvtltlh" path="res://Assets/SFX/explosion_3.mp3" id="5_1hw26"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tb6py"]
 transparency = 1
@@ -44,6 +47,12 @@ scale_curve = SubResource("CurveXYZTexture_mujsu")
 color = Color(5, 2, 1, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_xoq71"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tbrvm"]
+streams_count = 3
+stream_0/stream = ExtResource("3_tbrvm")
+stream_1/stream = ExtResource("4_s61ym")
+stream_2/stream = ExtResource("5_1hw26")
 
 [sub_resource type="Curve" id="Curve_65mi8"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -162,6 +171,7 @@ fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_mcjvs")
 draw_pass_1 = SubResource("QuadMesh_xoq71")
 script = ExtResource("2_tb6py")
+explosion_sound = SubResource("AudioStreamRandomizer_tbrvm")
 
 [node name="Flash" type="GPUParticles3D" parent="."]
 material_override = ExtResource("2_d04qs")

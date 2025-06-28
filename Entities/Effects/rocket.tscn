@@ -1,7 +1,8 @@
-[gd_scene load_steps=37 format=4 uid="uid://l1efvbdm7f4u"]
+[gd_scene load_steps=38 format=4 uid="uid://l1efvbdm7f4u"]
 
 [ext_resource type="Script" uid="uid://cyl0vtjh5eiff" path="res://Entities/Effects/rocket.gd" id="1_q47iq"]
 [ext_resource type="PackedScene" uid="uid://4y05f3dpwvee" path="res://Entities/Effects/explosion.tscn" id="2_0vr7n"]
+[ext_resource type="AudioStream" uid="uid://bpf6jhlnlla3h" path="res://Assets/SFX/missile_flight.mp3" id="2_i8tpi"]
 [ext_resource type="Texture2D" uid="uid://crm2jucjlq28x" path="res://Assets/fx/Flare00.PNG" id="3_sd6pk"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sd6pk"]
@@ -264,6 +265,11 @@ autostart = true
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 light_color = Color(1, 0.769, 0.37, 1)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_i8tpi")
+volume_db = -10.0
+autoplay = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

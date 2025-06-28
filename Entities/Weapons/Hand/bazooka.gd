@@ -11,6 +11,7 @@ var left = false
 @export var rocket: PackedScene
 
 
+
 func action():
 	if loaded and player.rockets > 0:
 		#$AnimationPlayer.play("shoot")
@@ -28,6 +29,8 @@ func spawn_rocket():
 	var direction = -global_transform.basis.z
 	
 	rocket_instance.direction = direction
+	
+	rocket_instance.player = player
 	
 	get_tree().current_scene.add_child(rocket_instance)
 	rocket_instance.global_position = $Handle/Cylinder/barrel.global_position

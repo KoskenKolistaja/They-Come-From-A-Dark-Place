@@ -7,8 +7,12 @@ var direction = Vector3.FORWARD
 
 const SPEED = 0.5
 
+var player
+
+
 func _ready():
 	look_at_from_position(self.global_position, self.global_position + direction)
+
 
 func _physics_process(delta):
 	
@@ -17,11 +21,13 @@ func _physics_process(delta):
 
 func explode():
 	var explosion_instance = explosion.instantiate()
+	explosion_instance.player = player
 	get_tree().current_scene.add_child(explosion_instance)
 	explosion_instance.global_position = self.global_position
 	$GPUParticles3D.emitting = false
 	$GPUParticles3D2.emitting = false
 	$Sparks.emitting = false
+	$AudioStreamPlayer3D.stop()
 	$rocket.hide()
 	$OmniLight3D.hide()
 	$CollisionShape3D.disabled = true
