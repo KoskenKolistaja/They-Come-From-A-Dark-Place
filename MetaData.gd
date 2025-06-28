@@ -27,3 +27,15 @@ var weapons = {
 	"rocket_crate": rocket_crate,
 	"turret_crate": turret_crate
 }
+
+
+func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
+
+func _physics_process(delta):
+	if Input.is_action_just_pressed("pause"):
+		if get_tree().paused:
+			get_tree().paused = false
+		else:
+			get_tree().paused = true

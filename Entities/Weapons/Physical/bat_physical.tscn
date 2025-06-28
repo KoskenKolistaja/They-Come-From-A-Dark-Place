@@ -80,6 +80,7 @@ radius = 0.0478516
 
 [node name="bat_physical" type="RigidBody3D"]
 collision_layer = 513
+angular_damp = 1.0
 script = ExtResource("1_rs2ml")
 hand_item = ExtResource("2_nxcpj")
 

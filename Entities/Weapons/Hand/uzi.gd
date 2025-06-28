@@ -3,8 +3,13 @@ extends Node3D
 
 var loaded = true
 
+var impact_strength = 7
+
 var type = "uzi"
 var ammo_type = "bullet"
+
+
+var spread = 0
 
 #const MAX_AMMO : int = 20
 #
@@ -28,6 +33,9 @@ var reloading = false
 	#update_hud_ammo()
 
 
+func _physics_process(delta):
+	spread = move_toward(spread,0,0.01)
+
 func action():
 	if loaded and player.bullets > 0:
 		$AnimationPlayer.play("shoot")
@@ -36,11 +44,11 @@ func action():
 		loaded = false
 		$Timer.start()
 		check_for_hit()
-		$Handle/Cube/RayCast3D.target_position.x = randf_range(-1,1)
-		$Handle/Cube/RayCast3D.target_position.y = randf_range(-1,1)
 		#update_hud_ammo()
 		player.bullets -= 1
 		player.update_hud_ammo()
+		spread += 0.1
+		spread = clamp(spread,0,1)
 
 func spawn_trace(collision_point):
 	var ray_start = $Handle/Cube/RayCast3D.global_position
@@ -62,7 +70,7 @@ func spawn_strike(spawn_position):
 func spawn_decal(spawn_position, parent, normal):
 	var decal_instance: Node3D = decal.instantiate()
 	var child_transform = decal_instance.global_transform
-	parent.add_child(decal_instance,true)
+	parent.add_child(decal_instance)
 	decal_instance.global_transform = child_transform
 	decal_instance.global_position = spawn_position
 	decal_instance.look_at_from_position(decal_instance.global_position,(decal_instance.global_position + normal*50))
@@ -96,7 +104,7 @@ func check_for_hit():
 				var direction = (end_point - start_point).normalized()
 				
 				#dic = {"start_point" : start_point , "end_point" : end_point , "strength" : 10, "killer": player}
-				dic = {"collision_point": collision_point, "direction": direction, "strength" : 10, "killer": player}
+				dic = {"collision_point": collision_point, "direction": direction, "strength" : impact_strength, "killer": player}
 				
 				collider.store_impact(dic)
 			
@@ -141,3 +149,8 @@ func check_for_hit():
 
 func _on_timer_timeout():
 	loaded = true
+
+
+func _on_timer_2_timeout():
+	$Handle/Cube/RayCast3D.target_position.x = randf_range(-spread,spread)
+	$Handle/Cube/RayCast3D.target_position.y = randf_range(-spread,spread)

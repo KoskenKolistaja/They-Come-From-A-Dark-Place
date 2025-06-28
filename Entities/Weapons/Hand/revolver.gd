@@ -11,6 +11,9 @@ var player
 
 var left = false
 
+var impact_strength = 15
+
+
 @export var tracer: PackedScene
 @export var strike: PackedScene
 @export var decal: PackedScene
@@ -41,15 +44,19 @@ func spawn_trace(collision_point):
 
 func spawn_strike(spawn_position):
 	var strike_instance = strike.instantiate()
-	strike_instance.global_position = spawn_position
 	get_tree().current_scene.add_child(strike_instance)
+	strike_instance.global_position = spawn_position
 
 func spawn_decal(spawn_position, parent, normal):
 	var decal_instance: Node3D = decal.instantiate()
 	var child_transform = decal_instance.global_transform
-	parent.add_child(decal_instance,true)
+	parent.add_child(decal_instance)
 	decal_instance.global_transform = child_transform
 	decal_instance.global_position = spawn_position
+	print(decal_instance)
+	print(decal_instance.scale)
+	print(decal_instance.global_position)
+	
 	decal_instance.look_at_from_position(decal_instance.global_position,(decal_instance.global_position + normal*50))
 
 
@@ -64,11 +71,10 @@ func check_for_hit():
 	if not collider:
 		return
 	else:
-		
+		spawn_decal(collision_point, collider,normal)
 		spawn_strike($Handle/Cube/RayCast3D.get_collision_point())
 		if collider.has_method("get_hit"):
 			
-			spawn_decal(collision_point, collider,normal)
 			
 			
 			if collider.has_method("store_impact"):
@@ -78,7 +84,7 @@ func check_for_hit():
 				var end_point = $Handle/Cube/EndPoint.global_position
 				var direction = (end_point - start_point).normalized()
 				
-				dic = {"collision_point": collision_point, "direction": direction, "strength" : 30, "killer": player}
+				dic = {"collision_point": collision_point, "direction": direction, "strength" : impact_strength, "killer": player}
 				
 				
 				collider.store_impact(dic)

@@ -204,8 +204,8 @@ func get_hit(damage: int = 1):
 
 func delete():
 	var r_number = randf_range(0,5)
-	change_state(STATE.DEAD)
 	await get_tree().create_timer(r_number).timeout
+	change_state(STATE.DEAD)
 	Audio.assign_sound(death_sounds,-20.0)
 	spawn_ragdoll()
 
@@ -278,6 +278,8 @@ func spawn_ragdoll():
 	
 	$ZombieCorpse.show()
 	$zombie.queue_free()
+	$Area3D.queue_free()
+	$ImpactArea.queue_free()
 	
 	await get_tree().create_timer(50).timeout
 	
@@ -287,7 +289,6 @@ func spawn_ragdoll():
 
 func apply_impact_to_bones():
 	var bones = $ImpactArea.get_overlapping_bodies()
-	print(bones)
 	
 	for bone in bones:
 		var impulse_vector = impact["direction"] * impact["strength"]

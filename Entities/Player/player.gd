@@ -11,8 +11,9 @@ extends CharacterBody3D
 
 
 
-const JUMP_STRENGTH = 200
-const SPEED = 1
+const JUMP_STRENGTH = 4
+const SPEED = 1.75
+#const SPEED = 10
 
 
 var animation_vector = Vector2.ZERO
@@ -29,7 +30,6 @@ func _physics_process(delta):
 	handle_movement()
 	handle_actions()
 	move_camera()
-	
 
 
 func _ready():
@@ -103,6 +103,9 @@ func set_ik2_target():
 
 func get_hit(damage: int = 1):
 	hp -= damage
+	
+	$AudioStreamPlayer3D.play()
+	$AnimationPlayer.play("Hurt")
 	
 	update_hud_health()
 	
@@ -276,9 +279,6 @@ func clear_left_hand():
 
 func handle_movement():
 	
-	if Input.is_action_just_pressed("p%d_jump" % player_id):
-		velocity.y += 1 * JUMP_STRENGTH
-	
 	
 	
 	var x = Input.get_joy_axis(player_id-1,JOY_AXIS_LEFT_X)
@@ -288,12 +288,12 @@ func handle_movement():
 	
 	var vector = Vector3(x,0,y)
 	
-	vector = vector.rotated(Vector3.UP,rad_to_deg(-45))
+	vector = vector.rotated(Vector3.UP,deg_to_rad(45))
 	
-	vector *= -1
 	
 	if vector.length() > 0.1:
-		velocity = vector * SPEED
+		velocity.x = (vector * SPEED).x
+		velocity.z = (vector * SPEED).z
 	else:
 		velocity.x = 0
 		velocity.z = 0
@@ -314,21 +314,27 @@ func handle_movement():
 				$Visual/Pivot2.rotation_degrees.x += -ry * 1.5
 			pass
 	
-	var desired_animation_vector:Vector2 = -Vector2(vector.x,-vector.y)
+	var desired_animation_vector:Vector2 = Vector2(x,-y)
 	
 	if desired_animation_vector.length() > 0.1:
 		animation_vector = animation_vector.move_toward(desired_animation_vector,0.1)
 	else:
 		animation_vector = animation_vector.move_toward(Vector2.ZERO,0.1)
 	
-	var angle = $Visual.global_transform.basis.z.normalized().signed_angle_to(Vector3(0,0,-1),Vector3.UP)
 	
+	var angle = $Visual.global_transform.basis.z.normalized().signed_angle_to(Vector3(-1,0,-1),Vector3.UP)
 	
+	print(angle)
 	
-	var end_vector = animation_vector.rotated(angle + deg_to_rad(-45))
-	
+	var end_vector = -animation_vector.rotated(angle)
 	
 	$Visual/Suitman/AnimationTree.set("parameters/Walk/blend_position", end_vector)
+	
+	if is_on_floor():
+		if Input.is_action_just_pressed("p%d_jump" % player_id):
+			velocity.y += 1 * JUMP_STRENGTH
+	else:
+		velocity.y -= 0.2
 	
 	move_and_slide()
 

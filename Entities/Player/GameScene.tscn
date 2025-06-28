@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cy8bymex7ky6p"]
+[gd_scene load_steps=33 format=3 uid="uid://cy8bymex7ky6p"]
 
 [ext_resource type="Script" uid="uid://cp3mbh8h06ikg" path="res://Views/game_scene.gd" id="1_yjsti"]
 [ext_resource type="PackedScene" uid="uid://b0bkkr2phnoad" path="res://Entities/Player/Player.tscn" id="2_bqjg1"]
@@ -110,7 +110,10 @@ _data = {
 &"daynight": SubResource("Animation_ibmo8")
 }
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_g21l2"]
+
 [node name="GameScene" type="Node3D" groups=["freezable"]]
+process_mode = 1
 script = ExtResource("1_yjsti")
 player = ExtResource("2_bqjg1")
 crate = ExtResource("3_g21l2")
@@ -306,6 +309,12 @@ wait_time = 196.0
 player_id = 1
 r_starting_weapon = ExtResource("23_bqjg1")
 l_starting_weapon = ExtResource("24_g21l2")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+shape = SubResource("WorldBoundaryShape3D_g21l2")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="EnemySpawner/EnemySpawnerTimer" to="." method="_on_enemy_spawner_timer_timeout"]
