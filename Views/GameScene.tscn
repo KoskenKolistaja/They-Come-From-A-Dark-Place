@@ -409,6 +409,7 @@ heavytaur = ExtResource("22_688g8")
 
 [node name="EnemySpawnerTimer" type="Timer" parent="EnemySpawner"]
 wait_time = 196.0
+one_shot = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 

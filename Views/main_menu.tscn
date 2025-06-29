@@ -133,6 +133,7 @@ theme_override_fonts/font = ExtResource("4_3k7gy")
 text = "Quit"
 
 [node name="Settings" type="Panel" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
