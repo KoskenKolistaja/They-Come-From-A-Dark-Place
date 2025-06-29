@@ -27,7 +27,9 @@ func check_for_hits():
 					var start_point = self.global_position
 					var end_point = $Handle/Cube/EndPoint.global_position
 					
-					dic = {"start_point" : start_point , "end_point" : end_point , "strength" : 10, "killer": player}
+					var direction = (end_point - start_point).normalized()
+					
+					dic = {"collision_point" : $Handle/Cube/CollisionPoint.global_position , "direction" : direction , "strength" : 10, "killer": player}
 					
 					
 					item.store_impact(dic)

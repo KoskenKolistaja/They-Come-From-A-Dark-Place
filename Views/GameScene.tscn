@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://cy8bymex7ky6p"]
+[gd_scene load_steps=43 format=3 uid="uid://cy8bymex7ky6p"]
 
 [ext_resource type="Script" uid="uid://cp3mbh8h06ikg" path="res://Views/game_scene.gd" id="1_f1yp5"]
 [ext_resource type="PackedScene" uid="uid://b0bkkr2phnoad" path="res://Entities/Player/Player.tscn" id="2_2frau"]
@@ -22,8 +22,6 @@
 [ext_resource type="Script" uid="uid://b61j6udx88gja" path="res://Entities/Utility/enemy_spawner.gd" id="20_xg1jb"]
 [ext_resource type="PackedScene" uid="uid://cok7j6b0g0cvj" path="res://Entities/zombie.tscn" id="21_b6ocb"]
 [ext_resource type="PackedScene" uid="uid://dwgvt727pycct" path="res://Entities/heavytaur_2.tscn" id="22_688g8"]
-[ext_resource type="PackedScene" uid="uid://ckn8qv0xeeot" path="res://Entities/Weapons/Hand/Uzi.tscn" id="23_qw3yk"]
-[ext_resource type="PackedScene" uid="uid://bda680irauldm" path="res://Entities/Weapons/Hand/Revolver.tscn" id="24_ewscu"]
 [ext_resource type="PackedScene" uid="uid://b33uqvkonguaq" path="res://Entities/Weapons/Physical/bazooka_physical.tscn" id="25_3d5bo"]
 [ext_resource type="PackedScene" uid="uid://csotsybpend4w" path="res://Entities/StreetProps/fence.tscn" id="26_bylgo"]
 [ext_resource type="ArrayMesh" uid="uid://vbc6lu1r8dpj" path="res://Fencemesh.tres" id="27_m0aa7"]
@@ -411,11 +409,6 @@ heavytaur = ExtResource("22_688g8")
 
 [node name="EnemySpawnerTimer" type="Timer" parent="EnemySpawner"]
 wait_time = 196.0
-
-[node name="Player" parent="." instance=ExtResource("2_2frau")]
-player_id = 1
-r_starting_weapon = ExtResource("23_qw3yk")
-l_starting_weapon = ExtResource("24_ewscu")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 

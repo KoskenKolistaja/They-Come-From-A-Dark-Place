@@ -60,6 +60,7 @@ func lose():
 	$PauseMenu/HBoxContainer/ContinueButton.hide()
 	$PauseMenu.show()
 	$PauseMenu/LOSE.show()
+	$PauseMenu/HBoxContainer/BackToMenuButton.grab_focus()
 
 func update_money(player_id,amount):
 	var huds = $HBoxContainer.get_children()

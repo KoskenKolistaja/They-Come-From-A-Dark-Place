@@ -184,6 +184,8 @@ skeleton = NodePath("")
 [node name="EndPoint" type="Node3D" parent="Handle/Cube"]
 transform = Transform3D(1, -1.49012e-08, -1.42109e-14, 1.49012e-08, 1, 2.88658e-13, -7.10543e-15, 2.16716e-13, 1, -0.613722, 0.092138, -5.7742e-08)
 
+[node name="CollisionPoint" type="Node3D" parent="Handle/Cube"]
+
 [node name="Area3D" type="Area3D" parent="Handle"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, -1.05879e-21, -1.77636e-14, 1, 0.485353, 0.0844192, 0.018588)
 
