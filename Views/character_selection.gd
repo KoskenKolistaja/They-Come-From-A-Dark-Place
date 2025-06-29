@@ -4,6 +4,8 @@ var players := {}
 
 var id_list = []
 
+var button = 0
+
 @export var character: PackedScene
 
 @onready var spots = [
@@ -35,7 +37,19 @@ func _input(event):
 			players[event.device].set_ready()
 	elif Input.is_joy_button_pressed(event.device,JOY_BUTTON_B):
 		delete_character(event.device)
+	
 
+
+func shake_camera():
+	pass
+
+func _process(delta):
+	for device in id_list:
+		var id_str := "p%d" % (device + 1)
+		if Input.is_action_just_pressed("%s_ui_left" % id_str):
+			players[device].previous_character()
+		elif Input.is_action_just_pressed("%s_ui_right" % id_str):
+			players[device].next_character()
 
 func start_game():
 	MetaData.players = id_list
