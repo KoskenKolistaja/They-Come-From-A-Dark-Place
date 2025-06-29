@@ -6,8 +6,12 @@ extends CharacterBody3D
 @export var r_starting_weapon: PackedScene
 @export var l_starting_weapon: PackedScene
 
-@onready var skeleton_ik = $Visual/Character/Armature/Skeleton3D/SkeletonIK3D
-@onready var skeleton_ik2 = $Visual/Character/Armature/Skeleton3D/SkeletonIK3D2
+@export var character: PackedScene
+
+var skeleton_ik
+var skeleton_ik2
+
+var state_machine
 
 
 
@@ -39,6 +43,13 @@ func _physics_process(delta):
 
 func _ready():
 	
+	spawn_visual()
+	skeleton_ik = $Visual/Character/Armature/Skeleton3D/SkeletonIK3D
+	skeleton_ik2 = $Visual/Character/Armature/Skeleton3D/SkeletonIK3D2
+	state_machine = $Visual/Character/AnimationTree.get("parameters/playback")
+	
+	
+	
 	
 	if r_starting_weapon:
 		var weapon_instance = r_starting_weapon.instantiate()
@@ -50,13 +61,15 @@ func _ready():
 		$Visual/Character/Armature/Skeleton3D/SkeletonIK3D2.start()
 	
 	await get_tree().physics_frame
-	
+
 	update_hud_ammo()
 	update_hud_money()
 	update_hud_health()
 
 
-
+func spawn_visual():
+	var character_instance = character.instantiate()
+	$Visual.add_child(character_instance)
 
 
 func add_money(amount):
@@ -115,7 +128,7 @@ func get_hit(damage: int = 1):
 	hp -= damage
 	
 	$AudioStreamPlayer3D.play()
-	$AnimationPlayer.play("Hurt")
+	$Visual/Character/AnimationPlayer2.play("Hurt")
 	
 	update_hud_health()
 	
@@ -128,8 +141,16 @@ func get_hit(damage: int = 1):
 
 
 func drop_down():
+	state_machine.travel("Death")
+	dead = true
+	self.remove_from_group("player")
 
-
+func get_up():
+	hp = 10
+	update_hud_health()
+	state_machine.travel("Walk")
+	dead = false
+	add_to_group("player")
 
 func handle_actions():
 	

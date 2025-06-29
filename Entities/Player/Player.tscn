@@ -1,8 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://b0bkkr2phnoad"]
+[gd_scene load_steps=16 format=3 uid="uid://b0bkkr2phnoad"]
 
 [ext_resource type="Script" uid="uid://hrotnnh570oj" path="res://Entities/Player/player.gd" id="1_41wu2"]
 [ext_resource type="Script" uid="uid://chysh3q8pyly1" path="res://Entities/Player/interaction_handler.gd" id="2_1iada"]
-[ext_resource type="PackedScene" uid="uid://2cqbv12tsk64" path="res://Entities/Player/Characters/suitman.tscn" id="2_761t5"]
+[ext_resource type="PackedScene" uid="uid://unuwej6fcml3" path="res://Entities/Player/Characters/swat.tscn" id="2_761t5"]
 [ext_resource type="Texture2D" uid="uid://3me181xhwtt0" path="res://Assets/UI Textures/button_xbox_digital_y_4.png" id="3_vweq0"]
 [ext_resource type="AudioStream" uid="uid://kyb1br2shlhi" path="res://Assets/SFX/Hurt1.ogg" id="4_x44r4"]
 [ext_resource type="AudioStream" uid="uid://22k3m6on3e5e" path="res://Assets/SFX/Hurt2.ogg" id="5_761t5"]
@@ -26,60 +26,6 @@ radius = 0.615723
 length = 0.4
 slide_on_slope = true
 
-[sub_resource type="Animation" id="Animation_vweq0"]
-resource_name = "Hurt"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Visual/Character/Armature/Skeleton3D/SkeletonIK3D3:influence")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.0333333, 0.133333, 0.466667),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [0.0, 0.667, 0.0]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Visual/Character/Armature/Skeleton3D/SkeletonIK3D3")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [false],
-"method": &"start"
-}, {
-"args": [],
-"method": &"stop"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_1des2"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Visual/Character/Armature/Skeleton3D/SkeletonIK3D3:influence")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_an6q6"]
-_data = {
-&"Hurt": SubResource("Animation_vweq0"),
-&"RESET": SubResource("Animation_1des2")
-}
-
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_vweq0"]
 random_pitch = 1.1
 streams_count = 5
@@ -97,7 +43,7 @@ axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
 script = ExtResource("1_41wu2")
-player_id = null
+character = ExtResource("2_761t5")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
@@ -131,8 +77,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.206, 1.219, 0)
 
 [node name="HandItem" type="Node3D" parent="Visual/Pivot2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0123807, -0.101478, -0.493035)
-
-[node name="Character" parent="Visual" instance=ExtResource("2_761t5")]
 
 [node name="InteractionHandler" type="Area3D" parent="."]
 collision_layer = 0
@@ -188,11 +132,6 @@ shape = SubResource("CylinderShape3D_41wu2")
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.4, -0.377)
 shape = SubResource("SeparationRayShape3D_vweq0")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_an6q6")
-}
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamRandomizer_vweq0")
