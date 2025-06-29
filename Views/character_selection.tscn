@@ -97,7 +97,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, -1.5)
 
 [node name="Spot7" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -1.5)
-
-[node name="ReflectionProbe" type="ReflectionProbe" parent="."]
-update_mode = 1
-size = Vector3(200, 20, 200)

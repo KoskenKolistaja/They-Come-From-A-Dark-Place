@@ -15,6 +15,13 @@ var characters = [
 	preload("res://Entities/UI Elements/SelectionCharacters/swat.tscn")
 ]
 
+var key_names = [
+	"suitman",
+	"lara",
+	"hazmat",
+	"swat"
+]
+
 var index = 0
 
 func _ready():
@@ -28,12 +35,15 @@ func _ready():
 	add_child(suitman_instance)
 	
 	character = suitman_instance
+	await get_tree().create_timer(0.1).timeout
+	MetaData.character_skins[player_id] = key_names[0]
+
 
 func _physics_process(delta):
 	pass
 
 
-func previous_character():
+func previous_character(id):
 	play_effects()
 	
 	index -= 1
@@ -47,8 +57,10 @@ func previous_character():
 	add_child(character_instance)
 	
 	character = character_instance
+	
+	MetaData.character_skins[id] = key_names[index]
 
-func next_character():
+func next_character(id):
 	play_effects()
 	
 	index += 1
@@ -62,6 +74,7 @@ func next_character():
 	add_child(character_instance)
 	
 	character = character_instance
+	MetaData.character_skins[id] = key_names[index]
 
 
 func play_effects():

@@ -15,6 +15,8 @@ var max_ragdolls = 20
 
 var ragdolls = []
 
+var character_skins = {}
+
 var revolver = preload("res://Entities/Weapons/Physical/revolver_physical.tscn")
 var bat = preload("res://Entities/Weapons/Physical/bat_physical.tscn")
 var uzi = preload("res://Entities/Weapons/Physical/uzi_physical.tscn")

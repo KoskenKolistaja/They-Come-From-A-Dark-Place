@@ -42,8 +42,9 @@ func _physics_process(delta):
 
 
 func _ready():
-	
+	await  get_tree().physics_frame
 	spawn_visual()
+	
 	skeleton_ik = $Visual/Character/Armature/Skeleton3D/SkeletonIK3D
 	skeleton_ik2 = $Visual/Character/Armature/Skeleton3D/SkeletonIK3D2
 	state_machine = $Visual/Character/AnimationTree.get("parameters/playback")
@@ -68,7 +69,8 @@ func _ready():
 
 
 func spawn_visual():
-	var character_instance = character.instantiate()
+	print(MetaData.character_skins)
+	var character_instance = MetaData.characters[MetaData.character_skins[player_id]].instantiate()
 	$Visual.add_child(character_instance)
 
 

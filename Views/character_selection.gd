@@ -47,9 +47,9 @@ func _process(delta):
 	for device in id_list:
 		var id_str := "p%d" % (device + 1)
 		if Input.is_action_just_pressed("%s_ui_left" % id_str):
-			players[device].previous_character()
+			players[device].previous_character(device+1)
 		elif Input.is_action_just_pressed("%s_ui_right" % id_str):
-			players[device].next_character()
+			players[device].next_character(device+1)
 
 func start_game():
 	MetaData.players = id_list
@@ -75,7 +75,7 @@ func spawn_character(player_id):
 	
 	
 	players[player_id] = character_instance
-	
+	character_instance.player_id = player_id + 1
 	
 
 
