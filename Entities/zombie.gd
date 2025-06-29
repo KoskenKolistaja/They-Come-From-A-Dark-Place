@@ -243,7 +243,7 @@ func _on_target_timer_timeout():
 
 
 func spawn_ragdoll():
-	
+	MetaData.add_ragdoll(self)
 	
 	var skeleton: Skeleton3D = $zombie/Armature/Skeleton3D
 	var corpse_instance = $ZombieCorpse
@@ -284,8 +284,7 @@ func spawn_ragdoll():
 	$TargetTimer.queue_free()
 	
 	await get_tree().create_timer(50).timeout
-	
-	
+	MetaData.delete_ragdoll(self)
 	queue_free()
 
 

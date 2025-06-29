@@ -10,6 +10,8 @@ var frozen= false
 
 
 
+
+
 func freeze():
 	var list = get_tree().get_nodes_in_group("freezable")
 	
@@ -21,6 +23,15 @@ func freeze():
 		for item in list:
 			item.set_physics_process(false)
 
+
+func _physics_process(delta):
+	if Input.is_action_just_pressed("pause"):
+		if get_tree().paused:
+			get_tree().paused = false
+		else:
+			get_tree().paused = true
+			$PauseMenu.show()
+			$PauseMenu/HBoxContainer/ContinueButton.grab_focus()
 
 func set_texture(exported_texture):
 	$TextureRect.texture = exported_texture
@@ -91,3 +102,17 @@ func spawn_player_huds():
 		$HBoxContainer.add_child(hud_instance)
 		hud_instance.player_id = p.player_id
 		hud_instance.update_name(p.player_id)
+
+
+func _on_continue_button_pressed():
+	get_tree().paused = false
+	$PauseMenu.hide()
+
+
+func _on_quit_button_pressed():
+	get_tree().quit()
+
+
+func _on_back_to_menu_button_pressed():
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://Views/main_menu.tscn")

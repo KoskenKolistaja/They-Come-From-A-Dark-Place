@@ -1,0 +1,469 @@
+[gd_scene load_steps=45 format=3 uid="uid://cy8bymex7ky6p"]
+
+[ext_resource type="Script" uid="uid://cp3mbh8h06ikg" path="res://Views/game_scene.gd" id="1_f1yp5"]
+[ext_resource type="PackedScene" uid="uid://b0bkkr2phnoad" path="res://Entities/Player/Player.tscn" id="2_2frau"]
+[ext_resource type="PackedScene" uid="uid://bscm7wyx00akq" path="res://Entities/BulletCrate.tscn" id="3_uwqju"]
+[ext_resource type="PackedScene" uid="uid://br7eavurfa1i5" path="res://Entities/Effects/bullet_tracer.tscn" id="4_atg3i"]
+[ext_resource type="PackedScene" uid="uid://dn15mgb3hkpoq" path="res://Levels/level_2.tscn" id="5_fvwrx"]
+[ext_resource type="VoxelGIData" uid="uid://dc3317au1ji4s" path="res://Views/GameScene.VoxelGI_data.res" id="6_cl61b"]
+[ext_resource type="PackedScene" uid="uid://cf8jxvxrj5s1h" path="res://Entities/StreetProps/park_bench.tscn" id="7_nk1sn"]
+[ext_resource type="PackedScene" uid="uid://c1yha5o1t6fne" path="res://Entities/Utility/follow_camera.tscn" id="8_8f0fd"]
+[ext_resource type="PackedScene" uid="uid://bnr6yr3dmwv4l" path="res://Entities/Effects/bullet_strike.tscn" id="9_plkcx"]
+[ext_resource type="PackedScene" uid="uid://c0edmfiurjqro" path="res://Entities/Weapons/Physical/bat_physical.tscn" id="10_butjr"]
+[ext_resource type="Texture2D" uid="uid://s37lo3pt2ltw" path="res://Assets/Textures/sky_27_2k.png" id="11_xxmv1"]
+[ext_resource type="Script" uid="uid://dmc1lq5hpjfoq" path="res://Entities/UI Elements/hud.gd" id="12_n2voc"]
+[ext_resource type="PackedScene" uid="uid://cn6knnbou4yvu" path="res://Entities/UI Elements/player_hud.tscn" id="13_2mmyv"]
+[ext_resource type="FontFile" uid="uid://ctukk4xriiim6" path="res://Assets/Fonts/SuperDream-ax3vE.ttf" id="14_12dm1"]
+[ext_resource type="Texture2D" uid="uid://cio71vbcwxama" path="res://Assets/UI Textures/Zombie.png" id="15_8cqy8"]
+[ext_resource type="FontFile" uid="uid://c3bg5eudyr8k" path="res://Assets/Fonts/Sangyo-E4ywr.ttf" id="16_3bdjd"]
+[ext_resource type="Texture2D" uid="uid://dk13cn7id2qr5" path="res://Assets/UI Textures/Heavytaur.png" id="17_p72nf"]
+[ext_resource type="PackedScene" uid="uid://clsa1jmhunrhk" path="res://Entities/StreetProps/vending_machine.tscn" id="18_yndu3"]
+[ext_resource type="PackedScene" uid="uid://b06sl2ddtc1q7" path="res://Entities/Buildings/building_1.tscn" id="19_p662v"]
+[ext_resource type="Script" uid="uid://b61j6udx88gja" path="res://Entities/Utility/enemy_spawner.gd" id="20_xg1jb"]
+[ext_resource type="PackedScene" uid="uid://cok7j6b0g0cvj" path="res://Entities/zombie.tscn" id="21_b6ocb"]
+[ext_resource type="PackedScene" uid="uid://dwgvt727pycct" path="res://Entities/heavytaur_2.tscn" id="22_688g8"]
+[ext_resource type="PackedScene" uid="uid://ckn8qv0xeeot" path="res://Entities/Weapons/Hand/Uzi.tscn" id="23_qw3yk"]
+[ext_resource type="PackedScene" uid="uid://bda680irauldm" path="res://Entities/Weapons/Hand/Revolver.tscn" id="24_ewscu"]
+[ext_resource type="PackedScene" uid="uid://b33uqvkonguaq" path="res://Entities/Weapons/Physical/bazooka_physical.tscn" id="25_3d5bo"]
+[ext_resource type="PackedScene" uid="uid://csotsybpend4w" path="res://Entities/StreetProps/fence.tscn" id="26_bylgo"]
+[ext_resource type="ArrayMesh" uid="uid://vbc6lu1r8dpj" path="res://Fencemesh.tres" id="27_m0aa7"]
+[ext_resource type="Texture2D" uid="uid://tkfksk1igx6f" path="res://Assets/Textures/fence2.png" id="28_5mely"]
+[ext_resource type="Texture2D" uid="uid://cyryu8g4d3jnb" path="res://Assets/Textures/fence2_normal.png" id="29_sgx5w"]
+[ext_resource type="PackedScene" uid="uid://bfode8hbbqxqq" path="res://Entities/HealthCrate.tscn" id="30_jpnuu"]
+[ext_resource type="PackedScene" uid="uid://bkfhyiskcjd1c" path="res://Entities/StreetProps/health_pay_phone.tscn" id="31_nyj1n"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wevbo"]
+panorama = ExtResource("11_xxmv1")
+
+[sub_resource type="Sky" id="Sky_ibmo8"]
+sky_material = SubResource("PanoramaSkyMaterial_wevbo")
+
+[sub_resource type="Environment" id="Environment_8cp3u"]
+background_mode = 2
+background_energy_multiplier = 0.8
+sky = SubResource("Sky_ibmo8")
+sky_rotation = Vector3(0, -3.14159, 0)
+tonemap_mode = 4
+ssr_enabled = true
+ssao_enabled = true
+ssil_enabled = true
+glow_enabled = true
+glow_intensity = 0.6
+glow_strength = 0.8
+glow_bloom = 0.03
+glow_blend_mode = 1
+glow_hdr_threshold = 0.98
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.037
+adjustment_enabled = true
+adjustment_brightness = 0.99
+adjustment_contrast = 0.98
+adjustment_saturation = 1.06
+
+[sub_resource type="Animation" id="Animation_qfby0"]
+resource_name = "DayToNight"
+length = 10.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WorldEnvironment:environment:background_energy_multiplier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.8, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_8cp3u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WorldEnvironment:environment:sky:sky_material:energy_multiplier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WorldEnvironment:environment:background_energy_multiplier")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.8]
+}
+
+[sub_resource type="Animation" id="Animation_ibmo8"]
+resource_name = "daynight"
+length = 180.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WorldEnvironment:environment:sky:sky_material:energy_multiplier")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 30, 90, 120, 180),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [1.0, 0.0, 0.0, 1.0, 1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qfby0"]
+_data = {
+&"DayToNight": SubResource("Animation_qfby0"),
+&"RESET": SubResource("Animation_8cp3u"),
+&"daynight": SubResource("Animation_ibmo8")
+}
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_g21l2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmos8"]
+albedo_color = Color(0.589096, 0.589096, 0.589096, 1)
+metallic = 0.65
+roughness = 0.26
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_swknm"]
+material = SubResource("StandardMaterial3D_fmos8")
+top_radius = 0.03
+bottom_radius = 0.03
+radial_segments = 8
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5bxvy"]
+size = Vector3(4, 2, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5bxvy"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("28_5mely")
+metallic = 0.89
+roughness = 0.2
+normal_enabled = true
+normal_scale = 1.7
+normal_texture = ExtResource("29_sgx5w")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_tit4p"]
+material = SubResource("StandardMaterial3D_5bxvy")
+orientation = 2
+
+[node name="GameScene" type="Node3D" groups=["freezable"]]
+process_mode = 1
+script = ExtResource("1_f1yp5")
+player = ExtResource("2_2frau")
+crate = ExtResource("3_uwqju")
+
+[node name="SceneObjects" type="Node3D" parent="."]
+
+[node name="BulletTracer" parent="SceneObjects" instance=ExtResource("4_atg3i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05649, 0.499263, -0.462089)
+
+[node name="Level2" parent="SceneObjects" instance=ExtResource("5_fvwrx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -30.9523)
+
+[node name="VoxelGI" type="VoxelGI" parent="SceneObjects"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.679932, 5.94763, -16.1933)
+size = Vector3(172.099, 16.2654, 131.352)
+data = ExtResource("6_cl61b")
+
+[node name="Camera3D" type="Camera3D" parent="SceneObjects"]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 11, 14, -4)
+size = 30.0
+
+[node name="ParkBench" parent="SceneObjects" instance=ExtResource("7_nk1sn")]
+transform = Transform3D(-0.61562, 0.777702, -0.127242, 4.31378e-08, 0.161466, 0.986878, 0.788043, 0.607542, -0.0994018, 5, 1.24178, 1)
+
+[node name="FollowCamera" parent="SceneObjects" instance=ExtResource("8_8f0fd")]
+
+[node name="BulletStrike" parent="." instance=ExtResource("9_plkcx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="bat_physical" parent="." instance=ExtResource("10_butjr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7527, 1.4851, 1.46414)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 12, 17, 0)
+size = 30.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8cp3u")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qfby0")
+}
+autoplay = "RESET"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="HUD" type="Control" parent="CanvasLayer" groups=["hud"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("12_n2voc")
+player_hud = ExtResource("13_2mmyv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HUD"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -216.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 500
+
+[node name="WaveNumber" type="Label" parent="CanvasLayer/HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -90.0
+offset_right = 90.0
+offset_bottom = 66.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("14_12dm1")
+theme_override_font_sizes/font_size = 56
+text = "WAVE 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HUD/WaveNumber"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -66.0
+offset_top = -13.21
+offset_right = 66.0
+offset_bottom = 50.79
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HUD/WaveNumber/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("15_8cqy8")
+expand_mode = 1
+
+[node name="ZombiesNumber" type="Label" parent="CanvasLayer/HUD/WaveNumber/HBoxContainer/TextureRect"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -1.79
+offset_right = 36.0
+offset_bottom = 25.21
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("16_3bdjd")
+theme_override_font_sizes/font_size = 26
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/HUD/WaveNumber/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("17_p72nf")
+expand_mode = 1
+
+[node name="HeavytaursNumber" type="Label" parent="CanvasLayer/HUD/WaveNumber/HBoxContainer/TextureRect2"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -1.79
+offset_right = 36.0
+offset_bottom = 25.21
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("16_3bdjd")
+theme_override_font_sizes/font_size = 26
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ReadyUp" type="Label" parent="CanvasLayer/HUD"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -90.0
+offset_right = 90.0
+offset_bottom = 66.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("14_12dm1")
+theme_override_font_sizes/font_size = 56
+text = "READY UP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/HUD"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 0
+offset_left = 51.0
+offset_top = 40.0
+offset_right = 91.0
+offset_bottom = 80.0
+
+[node name="PauseMenu" type="Panel" parent="CanvasLayer/HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -150.0
+offset_right = 250.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HUD/PauseMenu"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -67.0
+offset_right = 20.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 40
+
+[node name="ContinueButton" type="Button" parent="CanvasLayer/HUD/PauseMenu/HBoxContainer"]
+layout_mode = 2
+text = "Continue"
+
+[node name="BackToMenuButton" type="Button" parent="CanvasLayer/HUD/PauseMenu/HBoxContainer"]
+layout_mode = 2
+text = "Back To Menu"
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/HUD/PauseMenu/HBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="VendingMachine" parent="." instance=ExtResource("18_yndu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.35034, 1, -20.9136)
+
+[node name="Building1" parent="." instance=ExtResource("19_p662v")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28, 1, -22)
+
+[node name="EnemySpawner" type="Node3D" parent="."]
+script = ExtResource("20_xg1jb")
+zombie = ExtResource("21_b6ocb")
+heavytaur = ExtResource("22_688g8")
+
+[node name="EnemySpawnerTimer" type="Timer" parent="EnemySpawner"]
+wait_time = 196.0
+
+[node name="Player" parent="." instance=ExtResource("2_2frau")]
+player_id = 1
+r_starting_weapon = ExtResource("23_qw3yk")
+l_starting_weapon = ExtResource("24_ewscu")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+shape = SubResource("WorldBoundaryShape3D_g21l2")
+
+[node name="BazookaPhysical" parent="." instance=ExtResource("25_3d5bo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43039, 1.2488, -5.91726)
+
+[node name="Fence" parent="." instance=ExtResource("26_bylgo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.916, 1.09033, 7.416)
+
+[node name="Fence3" parent="." instance=ExtResource("26_bylgo")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.05483, 1.09033, 7.416)
+
+[node name="Fence2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.916, 1.09033, 11.5537)
+
+[node name="Fence" type="Node3D" parent="Fence2"]
+
+[node name="Cube_001" type="MeshInstance3D" parent="Fence2"]
+transform = Transform3D(0.0183951, 0, 0, 0, -7.61466e-10, -0.0174203, 0, 0.0174203, -7.61466e-10, -1.89109, 0.104629, 0)
+mesh = ExtResource("27_m0aa7")
+skeleton = NodePath("")
+
+[node name="Cube_002" type="MeshInstance3D" parent="Fence2"]
+transform = Transform3D(0.0183951, 0, 0, 0, -7.61466e-10, -0.0174203, 0, 0.0174203, -7.61466e-10, 0.108905, 0.104629, 0)
+mesh = ExtResource("27_m0aa7")
+skeleton = NodePath("")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Fence2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 0)
+mesh = SubResource("CylinderMesh_swknm")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Fence2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0)
+mesh = SubResource("CylinderMesh_swknm")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Fence2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Fence2/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2.98023e-08)
+shape = SubResource("BoxShape3D_5bxvy")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Fence2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 0)
+visible = false
+mesh = SubResource("PlaneMesh_tit4p")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Fence2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0)
+visible = false
+mesh = SubResource("PlaneMesh_tit4p")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Fence2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.9149, 0, 1)
+
+[node name="HealthCrate" parent="." instance=ExtResource("30_jpnuu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.50803, 3.23627, 9.27923)
+
+[node name="HealthPayPhone" parent="." instance=ExtResource("31_nyj1n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.243, 1.06176, 4.364)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="CanvasLayer/HUD/PauseMenu/HBoxContainer/ContinueButton" to="CanvasLayer/HUD" method="_on_continue_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/HUD/PauseMenu/HBoxContainer/BackToMenuButton" to="CanvasLayer/HUD" method="_on_back_to_menu_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/HUD/PauseMenu/HBoxContainer/QuitButton" to="CanvasLayer/HUD" method="_on_quit_button_pressed"]
+[connection signal="timeout" from="EnemySpawner/EnemySpawnerTimer" to="." method="_on_enemy_spawner_timer_timeout"]

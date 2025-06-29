@@ -12,11 +12,8 @@ func _ready():
 	
 	
 	if type:
+		set_pic()
 		$Label3D/Picture.show()
-		if type == 1:
-			set_pic(true)
-		elif type == 2:
-			set_pic(false)
 	
 	
 	
@@ -29,16 +26,19 @@ func _ready():
 
 
 
-func set_pic(bullets: bool):
+func set_pic():
 	var pic1: MeshInstance3D = $Label3D/Picture
 	
 	var mat1: StandardMaterial3D = pic1.get_surface_override_material(0)
 	
 	
-	if bullets:
+	if type == 1:
 		mat1.albedo_texture = preload("res://Assets/UI Textures/Bullet.png")
-	else:
+	elif type == 2:
 		mat1.albedo_texture = preload("res://Assets/UI Textures/Rocket.png")
+	else:
+		mat1.albedo_texture = preload("res://Assets/UI Textures/Cross.png")
+		mat1.albedo_color = Color(1,0,0)
 
 
 func _physics_process(delta):

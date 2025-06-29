@@ -4,6 +4,7 @@ extends Node3D
 @export var player: PackedScene
 
 
+
 @export var crate: PackedScene
 
 var song = preload("res://Assets/Music/Zombietheme2.ogg")
@@ -38,7 +39,7 @@ func spawn_players():
 		var player_instance = player.instantiate()
 		add_child(player_instance)
 		player_instance.player_id = (players[p]) + 1
-
+		player_instance.global_position = Vector3(0,1,0)
 
 
 
@@ -118,3 +119,7 @@ func start_wave():
 
 func _on_enemy_spawner_timer_timeout():
 	end_wave()
+
+
+func _on_back_to_menu_button_pressed():
+	pass # Replace with function body.

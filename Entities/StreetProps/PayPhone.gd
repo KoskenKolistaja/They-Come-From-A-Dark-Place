@@ -8,7 +8,7 @@ extends StaticBody3D
 @export var type: int
 
 
-var price = 100
+@export var price = 100
 
 
 
@@ -30,11 +30,15 @@ func action(caller):
 		if type == 1:
 			player.bullets += 100
 			spawn_info_label("+100")
-		else:
+		elif type == 2:
 			player.rockets += 100
+			spawn_info_label("+10")
+		else:
+			player.add_hp(10)
 			spawn_info_label("+10")
 		player.update_hud_ammo()
 		player.update_hud_money()
+		player.update_hud_health()
 		
 		$AudioStreamPlayer.play()
 

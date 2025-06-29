@@ -50,7 +50,6 @@ func is_game_ready():
 			break
 	
 	
-	
 	return returned
 
 

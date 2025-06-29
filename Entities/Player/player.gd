@@ -6,8 +6,8 @@ extends CharacterBody3D
 @export var r_starting_weapon: PackedScene
 @export var l_starting_weapon: PackedScene
 
-@onready var skeleton_ik = $Visual/Suitman/Armature/Skeleton3D/SkeletonIK3D
-@onready var skeleton_ik2 = $Visual/Suitman/Armature/Skeleton3D/SkeletonIK3D2
+@onready var skeleton_ik = $Visual/Character/Armature/Skeleton3D/SkeletonIK3D
+@onready var skeleton_ik2 = $Visual/Character/Armature/Skeleton3D/SkeletonIK3D2
 
 
 
@@ -26,10 +26,15 @@ var money = 500
 
 var hp = 100
 
+var dead = false
+
+
 func _physics_process(delta):
-	handle_movement()
-	handle_actions()
-	move_camera()
+	
+	if not dead:
+		handle_movement()
+		handle_actions()
+	#move_camera()
 
 
 func _ready():
@@ -38,11 +43,11 @@ func _ready():
 	if r_starting_weapon:
 		var weapon_instance = r_starting_weapon.instantiate()
 		add_right_hand_weapon(weapon_instance)
-		$Visual/Suitman/Armature/Skeleton3D/SkeletonIK3D.start()
+		$Visual/Character/Armature/Skeleton3D/SkeletonIK3D.start()
 	if l_starting_weapon:
 		var weapon_instance = l_starting_weapon.instantiate()
 		add_left_hand_weapon(weapon_instance)
-		$Visual/Suitman/Armature/Skeleton3D/SkeletonIK3D2.start()
+		$Visual/Character/Armature/Skeleton3D/SkeletonIK3D2.start()
 	
 	await get_tree().physics_frame
 	
@@ -60,6 +65,11 @@ func add_money(amount):
 func update_hud_money():
 	var hud = get_tree().get_first_node_in_group("hud")
 	hud.update_money(player_id,money)
+
+func add_hp(amount):
+	hp += amount
+	
+	hp = clamp(hp,0,100)
 
 func update_hud_ammo():
 	var hud = get_tree().get_first_node_in_group("hud")
@@ -92,14 +102,14 @@ func add_left_hand_weapon(weapon_instance):
 func set_ik_target():
 	var hand_item = $Visual/Pivot/HandItem.get_child(0)
 	var handle = hand_item.get_node("Handle")
-	$Visual/Suitman/Armature/Skeleton3D/SkeletonIK3D.set_target_node(handle.get_path())
-	$Visual/Suitman/Armature/Skeleton3D/SkeletonIK3D.start()
+	$Visual/Character/Armature/Skeleton3D/SkeletonIK3D.set_target_node(handle.get_path())
+	$Visual/Character/Armature/Skeleton3D/SkeletonIK3D.start()
 
 func set_ik2_target():
 	var hand_item = $Visual/Pivot2/HandItem.get_child(0)
 	var handle = hand_item.get_node("Handle")
-	$Visual/Suitman/Armature/Skeleton3D/SkeletonIK3D2.set_target_node(handle.get_path())
-	$Visual/Suitman/Armature/Skeleton3D/SkeletonIK3D2.start()
+	$Visual/Character/Armature/Skeleton3D/SkeletonIK3D2.set_target_node(handle.get_path())
+	$Visual/Character/Armature/Skeleton3D/SkeletonIK3D2.start()
 
 func get_hit(damage: int = 1):
 	hp -= damage
@@ -114,7 +124,12 @@ func get_hit(damage: int = 1):
 			drop_r_weapon()
 		if $Visual/Pivot2/HandItem.get_child(0):
 			drop_l_weapon()
-		queue_free()
+		drop_down()
+
+
+func drop_down():
+
+
 
 func handle_actions():
 	
@@ -324,11 +339,10 @@ func handle_movement():
 	
 	var angle = $Visual.global_transform.basis.z.normalized().signed_angle_to(Vector3(-1,0,-1),Vector3.UP)
 	
-	print(angle)
 	
 	var end_vector = -animation_vector.rotated(angle)
 	
-	$Visual/Suitman/AnimationTree.set("parameters/Walk/blend_position", end_vector)
+	$Visual/Character/AnimationTree.set("parameters/Walk/blend_position", end_vector)
 	
 	if is_on_floor():
 		if Input.is_action_just_pressed("p%d_jump" % player_id):
