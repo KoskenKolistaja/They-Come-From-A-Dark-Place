@@ -71,6 +71,16 @@ func night_to_day():
 	get_tree().call_group("enemy", "delete")
 
 
+func check_lose_condition():
+	if not get_tree().get_nodes_in_group("player"):
+		lose()
+
+func lose():
+	var hud = get_tree().get_first_node_in_group("hud")
+	
+	hud.lose()
+
+
 func shake_camera():
 	var camera = get_viewport().get_camera_3d()
 	

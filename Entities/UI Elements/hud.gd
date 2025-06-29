@@ -56,6 +56,10 @@ func start_wave():
 	$WaveNumber.show()
 	$ReadyUp.hide()
 
+func lose():
+	$PauseMenu/HBoxContainer/ContinueButton.hide()
+	$PauseMenu.show()
+	$PauseMenu/LOSE.show()
 
 func update_money(player_id,amount):
 	var huds = $HBoxContainer.get_children()

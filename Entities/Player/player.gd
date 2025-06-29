@@ -144,6 +144,8 @@ func drop_down():
 	state_machine.travel("Death")
 	dead = true
 	self.remove_from_group("player")
+	get_tree().current_scene.check_lose_condition()
+
 
 func get_up():
 	hp = 10
