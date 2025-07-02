@@ -57,7 +57,7 @@ func jump():
 	
 	for b in bodies:
 		if b.is_in_group("player"):
-			b.get_hit(1)
+			b.get_hit(0)
 
 
 

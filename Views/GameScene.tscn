@@ -1,10 +1,10 @@
-[gd_scene load_steps=45 format=3 uid="uid://cy8bymex7ky6p"]
+[gd_scene load_steps=36 format=3 uid="uid://cy8bymex7ky6p"]
 
 [ext_resource type="Script" uid="uid://cp3mbh8h06ikg" path="res://Views/game_scene.gd" id="1_f1yp5"]
 [ext_resource type="PackedScene" uid="uid://b0bkkr2phnoad" path="res://Entities/Player/Player.tscn" id="2_2frau"]
 [ext_resource type="PackedScene" uid="uid://bscm7wyx00akq" path="res://Entities/BulletCrate.tscn" id="3_uwqju"]
 [ext_resource type="PackedScene" uid="uid://br7eavurfa1i5" path="res://Entities/Effects/bullet_tracer.tscn" id="4_atg3i"]
-[ext_resource type="PackedScene" uid="uid://dn15mgb3hkpoq" path="res://Levels/level_2.tscn" id="5_fvwrx"]
+[ext_resource type="PackedScene" uid="uid://dn15mgb3hkpoq" path="res://Entities/StreetProps/level_2.tscn" id="5_fvwrx"]
 [ext_resource type="VoxelGIData" uid="uid://dc3317au1ji4s" path="res://Views/GameScene.VoxelGI_data.res" id="6_cl61b"]
 [ext_resource type="PackedScene" uid="uid://cf8jxvxrj5s1h" path="res://Entities/StreetProps/park_bench.tscn" id="7_nk1sn"]
 [ext_resource type="PackedScene" uid="uid://c1yha5o1t6fne" path="res://Entities/Utility/follow_camera.tscn" id="8_8f0fd"]
@@ -24,10 +24,6 @@
 [ext_resource type="PackedScene" uid="uid://cok7j6b0g0cvj" path="res://Entities/zombie.tscn" id="21_b6ocb"]
 [ext_resource type="PackedScene" uid="uid://dwgvt727pycct" path="res://Entities/heavytaur_2.tscn" id="22_688g8"]
 [ext_resource type="PackedScene" uid="uid://b33uqvkonguaq" path="res://Entities/Weapons/Physical/bazooka_physical.tscn" id="25_3d5bo"]
-[ext_resource type="PackedScene" uid="uid://csotsybpend4w" path="res://Entities/StreetProps/fence.tscn" id="26_bylgo"]
-[ext_resource type="ArrayMesh" uid="uid://vbc6lu1r8dpj" path="res://Fencemesh.tres" id="27_m0aa7"]
-[ext_resource type="Texture2D" uid="uid://tkfksk1igx6f" path="res://Assets/Textures/fence2.png" id="28_5mely"]
-[ext_resource type="Texture2D" uid="uid://cyryu8g4d3jnb" path="res://Assets/Textures/fence2_normal.png" id="29_sgx5w"]
 [ext_resource type="PackedScene" uid="uid://dntwhjy00ix28" path="res://Entities/zombie_dog.tscn" id="30_5a2s5"]
 [ext_resource type="PackedScene" uid="uid://bfode8hbbqxqq" path="res://Entities/HealthCrate.tscn" id="30_jpnuu"]
 [ext_resource type="PackedScene" uid="uid://bkfhyiskcjd1c" path="res://Entities/StreetProps/health_pay_phone.tscn" id="31_nyj1n"]
@@ -129,35 +125,6 @@ _data = {
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_g21l2"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmos8"]
-albedo_color = Color(0.589096, 0.589096, 0.589096, 1)
-metallic = 0.65
-roughness = 0.26
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_swknm"]
-material = SubResource("StandardMaterial3D_fmos8")
-top_radius = 0.03
-bottom_radius = 0.03
-radial_segments = 8
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_5bxvy"]
-size = Vector3(4, 2, 0.2)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5bxvy"]
-transparency = 2
-alpha_scissor_threshold = 0.5
-alpha_antialiasing_mode = 0
-albedo_texture = ExtResource("28_5mely")
-metallic = 0.89
-roughness = 0.2
-normal_enabled = true
-normal_scale = 1.7
-normal_texture = ExtResource("29_sgx5w")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_tit4p"]
-material = SubResource("StandardMaterial3D_5bxvy")
-orientation = 2
-
 [node name="GameScene" type="Node3D" groups=["freezable"]]
 process_mode = 1
 script = ExtResource("1_f1yp5")
@@ -234,6 +201,7 @@ grow_vertical = 0
 theme_override_constants/separation = 500
 
 [node name="WaveNumber" type="Label" parent="CanvasLayer/HUD"]
+visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -446,54 +414,6 @@ shape = SubResource("WorldBoundaryShape3D_g21l2")
 
 [node name="BazookaPhysical" parent="." instance=ExtResource("25_3d5bo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43039, 1.2488, -5.91726)
-
-[node name="Fence" parent="." instance=ExtResource("26_bylgo")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.916, 1.09033, 7.416)
-
-[node name="Fence3" parent="." instance=ExtResource("26_bylgo")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -7.05483, 1.09033, 7.416)
-
-[node name="Fence2" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.916, 1.09033, 11.5537)
-
-[node name="Fence" type="Node3D" parent="Fence2"]
-
-[node name="Cube_001" type="MeshInstance3D" parent="Fence2"]
-transform = Transform3D(0.0183951, 0, 0, 0, -7.61466e-10, -0.0174203, 0, 0.0174203, -7.61466e-10, -1.89109, 0.104629, 0)
-mesh = ExtResource("27_m0aa7")
-skeleton = NodePath("")
-
-[node name="Cube_002" type="MeshInstance3D" parent="Fence2"]
-transform = Transform3D(0.0183951, 0, 0, 0, -7.61466e-10, -0.0174203, 0, 0.0174203, -7.61466e-10, 0.108905, 0.104629, 0)
-mesh = ExtResource("27_m0aa7")
-skeleton = NodePath("")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Fence2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1, 0)
-mesh = SubResource("CylinderMesh_swknm")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Fence2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1, 0)
-mesh = SubResource("CylinderMesh_swknm")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Fence2"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Fence2/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 2.98023e-08)
-shape = SubResource("BoxShape3D_5bxvy")
-
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="Fence2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 0)
-visible = false
-mesh = SubResource("PlaneMesh_tit4p")
-
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="Fence2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0)
-visible = false
-mesh = SubResource("PlaneMesh_tit4p")
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Fence2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.9149, 0, 1)
 
 [node name="HealthCrate" parent="." instance=ExtResource("30_jpnuu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.50803, 3.23627, 9.27923)
