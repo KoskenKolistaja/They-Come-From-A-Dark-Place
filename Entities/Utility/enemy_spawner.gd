@@ -147,7 +147,6 @@ func spawn_heavytaur():
 		desired_heavytaur_time = 0
 
 func spawn_zombie_dog():
-	print("tried to spawn a dog!")
 	
 	var points = get_tree().get_nodes_in_group("spawnpoint")
 	
@@ -162,7 +161,6 @@ func spawn_zombie_dog():
 		get_tree().current_scene.add_child(zombie_dog_instance)
 		zombie_dog_instance.global_position = point.global_position
 		
-		print("Spawned a dog!")
 		
 		zombie_dogs -= 1
 		

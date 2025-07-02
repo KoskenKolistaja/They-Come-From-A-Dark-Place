@@ -9,20 +9,27 @@ const SPEED = 6.0
 
 var boolean = false
 
+var dead = false
+
+@onready var state_machine = $zombiedog2/AnimationTree.get("parameters/playback")
+
+
 
 func _ready():
 	target = get_tree().get_first_node_in_group("player")
 
 
 func _physics_process(delta):
-	if target:
+	if target and not dead:
 		var distance = (target.global_position - self.global_position).length()
 		
 		if distance < 5:
 			jump()
-			$AnimationPlayer.stop()
+			state_machine.travel("Attack3")
 		else:
 			chase()
+	else:
+		move_and_slide()
 
 func jump():
 	var vector = (target.global_position + Vector3(0,1,0)) - self.global_position
@@ -77,11 +84,13 @@ func chase():
 	move_and_slide()
 
 func get_hit(damage: int = 1):
-	$Ragdoll/Skeleton3D/PhysicalBoneSimulator3D.physical_bones_start_simulation()
+	$zombiedog/metarig/Skeleton3D/PhysicalBoneSimulator3D.physical_bones_start_simulation()
 	
 	await get_tree().physics_frame
-	$Visual.queue_free()
-	$Ragdoll.show()
+	dead = true
+	$CollisionShape3D.queue_free()
+	$zombiedog2.queue_free()
+	$zombiedog.show()
 	
 	await get_tree().create_timer(10).timeout
 	

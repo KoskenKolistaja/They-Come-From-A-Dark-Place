@@ -501,9 +501,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.50803, 3.23627, 9.27923)
 [node name="HealthPayPhone" parent="." instance=ExtResource("31_nyj1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.243, 1.06176, 4.364)
 
-[node name="ZombieDog" parent="." instance=ExtResource("30_5a2s5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.591, 1.1, 8.57373)
-
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/HUD/PauseMenu/HBoxContainer/ContinueButton" to="CanvasLayer/HUD" method="_on_continue_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/HUD/PauseMenu/HBoxContainer/BackToMenuButton" to="CanvasLayer/HUD" method="_on_back_to_menu_button_pressed"]
