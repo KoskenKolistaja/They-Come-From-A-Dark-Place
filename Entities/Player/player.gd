@@ -69,9 +69,11 @@ func _ready():
 
 
 func spawn_visual():
-	print(MetaData.character_skins)
-	var character_instance = MetaData.characters[MetaData.character_skins[player_id]].instantiate()
-	$Visual.add_child(character_instance)
+	if MetaData.character_skins:
+		var character_instance = MetaData.characters[MetaData.character_skins[player_id]].instantiate()
+		$Visual.add_child(character_instance)
+	else:
+		$Visual.add_child(preload("res://Entities/Player/Characters/suitman.tscn").instantiate())
 
 
 func add_money(amount):

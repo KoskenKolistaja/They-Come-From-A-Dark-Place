@@ -47,6 +47,9 @@ func update_zombies(number):
 func update_heavytaurs(number):
 	$WaveNumber/HBoxContainer/TextureRect2/HeavytaursNumber.text = str(number)
 
+func update_zombie_dogs(number):
+	$WaveNumber/HBoxContainer/TextureRect3/ZombieDogsNumber.text = str(number)
+
 func end_wave():
 	$WaveNumber.hide()
 	$ReadyUp.show()

@@ -3,13 +3,18 @@ extends Node3D
 
 @export var zombie: PackedScene
 @export var heavytaur: PackedScene
+@export var zombie_dog: PackedScene
+
 
 var zombies = 0
 var heavytaurs = 0
+var zombie_dogs = 0
 
 var current_time = 0
 var desired_zombie_time = 5000
 var desired_heavytaur_time = 10000
+var desired_zombie_dog_time = 10000
+
 
 @onready var hud = get_tree().get_first_node_in_group("hud")
 
@@ -20,7 +25,7 @@ func _ready():
 	zombies = MetaData.zombie_waves[MetaData.wave_number]
 	hud.update_zombies(zombies)
 	hud.update_heavytaurs(heavytaurs)
-
+	hud.update_zombie_dogs(zombie_dogs)
 
 func _physics_process(delta):
 	current_time = Time.get_ticks_msec()
@@ -46,6 +51,14 @@ func _physics_process(delta):
 		
 		hud.update_heavytaurs(heavytaurs)
 
+	if current_time > desired_zombie_dog_time and zombie_dogs:
+		
+		
+		spawn_zombie_dog()
+		desired_zombie_dog_time = current_time + get_zombie_dog_time()
+		
+		
+		hud.update_zombie_dogs(zombie_dogs)
 
 
 func update_enemies():
@@ -54,6 +67,9 @@ func update_enemies():
 	
 	heavytaurs = MetaData.heavytaur_waves[MetaData.wave_number]
 	hud.update_heavytaurs(heavytaurs)
+	
+	zombie_dogs = MetaData.zombie_dog_waves[MetaData.wave_number]
+	hud.update_zombie_dogs(zombie_dogs)
 
 func get_zombie_time():
 	var seconds = $EnemySpawnerTimer.time_left
@@ -77,6 +93,16 @@ func get_heavytaur_time():
 	
 	return returned
 
+func get_zombie_dog_time():
+	var seconds = $EnemySpawnerTimer.time_left
+	
+	var average = seconds/zombie_dogs
+	
+	var returned = average
+	
+	returned *= 1000
+	
+	return returned
 
 func spawn_zombie():
 	var points = get_tree().get_nodes_in_group("spawnpoint")
@@ -119,3 +145,28 @@ func spawn_heavytaur():
 			desired_heavytaur_time = 0
 	else:
 		desired_heavytaur_time = 0
+
+func spawn_zombie_dog():
+	print("tried to spawn a dog!")
+	
+	var points = get_tree().get_nodes_in_group("spawnpoint")
+	
+	var size = points.size()
+	var random = randi_range(1,size)
+	var rand_index = random-1
+	var point = points[rand_index]
+	
+	if point.test_light() < 0.01:
+		var zombie_dog_instance = zombie_dog.instantiate()
+		
+		get_tree().current_scene.add_child(zombie_dog_instance)
+		zombie_dog_instance.global_position = point.global_position
+		
+		print("Spawned a dog!")
+		
+		zombie_dogs -= 1
+		
+		if zombie_dogs <= 0:
+			desired_zombie_dog_time = 0
+	else:
+		desired_zombie_dog_time = 0

@@ -5,7 +5,7 @@ extends Control
 
 func _ready():
 	$Base/VBoxContainer/StartButton.grab_focus()
-	Audio.assign_song(preload("res://Assets/Music/Zombieluonnos2.ogg"),-12)
+	
 
 
 func _on_start_button_pressed():

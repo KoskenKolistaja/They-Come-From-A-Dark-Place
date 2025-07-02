@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=3 uid="uid://cy8bymex7ky6p"]
+[gd_scene load_steps=45 format=3 uid="uid://cy8bymex7ky6p"]
 
 [ext_resource type="Script" uid="uid://cp3mbh8h06ikg" path="res://Views/game_scene.gd" id="1_f1yp5"]
 [ext_resource type="PackedScene" uid="uid://b0bkkr2phnoad" path="res://Entities/Player/Player.tscn" id="2_2frau"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://cio71vbcwxama" path="res://Assets/UI Textures/Zombie.png" id="15_8cqy8"]
 [ext_resource type="FontFile" uid="uid://c3bg5eudyr8k" path="res://Assets/Fonts/Sangyo-E4ywr.ttf" id="16_3bdjd"]
 [ext_resource type="Texture2D" uid="uid://dk13cn7id2qr5" path="res://Assets/UI Textures/Heavytaur.png" id="17_p72nf"]
+[ext_resource type="Texture2D" uid="uid://dud1g6qgx4s4c" path="res://Assets/UI Textures/Zombie_dog.png" id="18_2frau"]
 [ext_resource type="PackedScene" uid="uid://clsa1jmhunrhk" path="res://Entities/StreetProps/vending_machine.tscn" id="18_yndu3"]
 [ext_resource type="PackedScene" uid="uid://b06sl2ddtc1q7" path="res://Entities/Buildings/building_1.tscn" id="19_p662v"]
 [ext_resource type="Script" uid="uid://b61j6udx88gja" path="res://Entities/Utility/enemy_spawner.gd" id="20_xg1jb"]
@@ -27,6 +28,7 @@
 [ext_resource type="ArrayMesh" uid="uid://vbc6lu1r8dpj" path="res://Fencemesh.tres" id="27_m0aa7"]
 [ext_resource type="Texture2D" uid="uid://tkfksk1igx6f" path="res://Assets/Textures/fence2.png" id="28_5mely"]
 [ext_resource type="Texture2D" uid="uid://cyryu8g4d3jnb" path="res://Assets/Textures/fence2_normal.png" id="29_sgx5w"]
+[ext_resource type="PackedScene" uid="uid://dntwhjy00ix28" path="res://Entities/zombie_dog.tscn" id="30_5a2s5"]
 [ext_resource type="PackedScene" uid="uid://bfode8hbbqxqq" path="res://Entities/HealthCrate.tscn" id="30_jpnuu"]
 [ext_resource type="PackedScene" uid="uid://bkfhyiskcjd1c" path="res://Entities/StreetProps/health_pay_phone.tscn" id="31_nyj1n"]
 
@@ -232,7 +234,6 @@ grow_vertical = 0
 theme_override_constants/separation = 500
 
 [node name="WaveNumber" type="Label" parent="CanvasLayer/HUD"]
-visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -295,6 +296,31 @@ texture = ExtResource("17_p72nf")
 expand_mode = 1
 
 [node name="HeavytaursNumber" type="Label" parent="CanvasLayer/HUD/WaveNumber/HBoxContainer/TextureRect2"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -1.79
+offset_right = 36.0
+offset_bottom = 25.21
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("16_3bdjd")
+theme_override_font_sizes/font_size = 26
+text = "99"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/HUD/WaveNumber/HBoxContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("18_2frau")
+expand_mode = 1
+
+[node name="ZombieDogsNumber" type="Label" parent="CanvasLayer/HUD/WaveNumber/HBoxContainer/TextureRect3"]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -406,6 +432,7 @@ transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28, 1
 script = ExtResource("20_xg1jb")
 zombie = ExtResource("21_b6ocb")
 heavytaur = ExtResource("22_688g8")
+zombie_dog = ExtResource("30_5a2s5")
 
 [node name="EnemySpawnerTimer" type="Timer" parent="EnemySpawner"]
 wait_time = 196.0
@@ -473,6 +500,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.50803, 3.23627, 9.27923)
 
 [node name="HealthPayPhone" parent="." instance=ExtResource("31_nyj1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.243, 1.06176, 4.364)
+
+[node name="ZombieDog" parent="." instance=ExtResource("30_5a2s5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.591, 1.1, 8.57373)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/HUD/PauseMenu/HBoxContainer/ContinueButton" to="CanvasLayer/HUD" method="_on_continue_button_pressed"]

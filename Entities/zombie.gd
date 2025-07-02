@@ -274,7 +274,8 @@ func spawn_ragdoll():
 	
 	await get_tree().physics_frame
 	
-	apply_impact_to_bones()
+	if impact:
+		apply_impact_to_bones()
 	
 	$ZombieCorpse.show()
 	$zombie.queue_free()
@@ -289,6 +290,7 @@ func spawn_ragdoll():
 
 
 func apply_impact_to_bones():
+	
 	var bones = $ImpactArea.get_overlapping_bodies()
 	
 	for bone in bones:

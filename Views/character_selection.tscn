@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://dtym1raeanels"]
+[gd_scene load_steps=8 format=3 uid="uid://dtym1raeanels"]
 
 [ext_resource type="Script" uid="uid://kincuw20raf7" path="res://Views/character_selection.gd" id="1_tylnv"]
 [ext_resource type="Texture2D" uid="uid://5e34ha2xl1gu" path="res://Assets/Textures/metal_01_1k/metal_01_1k/metal_01_normal_gl_1k.png" id="1_w8kuo"]
+[ext_resource type="AudioStream" uid="uid://bunr8ndvnnnwx" path="res://Assets/SFX/UI Switch.ogg" id="3_at4ae"]
 [ext_resource type="PackedScene" uid="uid://dhxxghmgoelbj" path="res://Entities/UI Elements/selection_character.tscn" id="3_x7ol4"]
+[ext_resource type="AudioStream" uid="uid://dekqa116sn7tb" path="res://Assets/SFX/UI Accept.ogg" id="4_1malo"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3vtvp"]
 albedo_color = Color(0.051971, 0.051971, 0.051971, 1)
@@ -18,6 +20,8 @@ fog_light_energy = 0.0
 [node name="CharacterSelection" type="Node3D"]
 script = ExtResource("1_tylnv")
 character = ExtResource("3_x7ol4")
+ui_switch = ExtResource("3_at4ae")
+ui_accept = ExtResource("4_1malo")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)

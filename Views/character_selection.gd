@@ -8,6 +8,10 @@ var button = 0
 
 @export var character: PackedScene
 
+@export var ui_switch: AudioStream
+@export var ui_accept: AudioStream
+
+
 @onready var spots = [
 	$Spot1,
 	$Spot2,
@@ -20,7 +24,7 @@ var button = 0
 
 
 func _ready():
-	Audio.assign_song(preload("res://Assets/Music/ChooseYourFighter.ogg"))
+	#Audio.assign_song(preload("res://Assets/Music/ChooseYourFighter.ogg"))
 	DebugBall.hide()
 
 func _input(event):
@@ -28,15 +32,18 @@ func _input(event):
 		if Input.is_joy_button_pressed(event.device,JOY_BUTTON_A):
 			spawn_character(event.device)
 			id_list.append(event.device)
+			Audio.assign_sound(ui_switch,-6)
 	elif Input.is_joy_button_pressed(event.device,JOY_BUTTON_A) and event.is_pressed():
-		
+		Audio.assign_sound(ui_accept,-15)
 		if players[event.device].ready_up:
 			if is_game_ready():
 				start_game()
 		else:
 			players[event.device].set_ready()
+			Audio.assign_sound(ui_accept)
 	elif Input.is_joy_button_pressed(event.device,JOY_BUTTON_B):
 		delete_character(event.device)
+		Audio.assign_sound(ui_switch,-6)
 	
 
 
@@ -48,8 +55,12 @@ func _process(delta):
 		var id_str := "p%d" % (device + 1)
 		if Input.is_action_just_pressed("%s_ui_left" % id_str):
 			players[device].previous_character(device+1)
+			Audio.assign_sound(ui_switch,-6)
 		elif Input.is_action_just_pressed("%s_ui_right" % id_str):
 			players[device].next_character(device+1)
+			Audio.assign_sound(ui_switch,-6)
+
+
 
 func start_game():
 	MetaData.players = id_list

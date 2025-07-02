@@ -6,7 +6,7 @@ room_size = 0.37
 wet = 0.04
 
 [resource]
-bus/0/volume_db = 0.662756
+bus/0/volume_db = 1.45601
 bus/1/name = &"Basic Reverb"
 bus/1/solo = false
 bus/1/mute = false

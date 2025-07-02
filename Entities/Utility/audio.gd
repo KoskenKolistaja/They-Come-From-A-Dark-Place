@@ -58,7 +58,7 @@ func set_loop(song):
 
 func _ready():
 	sfx_players = $SFX.get_children()
-
+	Audio.assign_song(preload("res://Assets/Music/Zombieluonnos2.ogg"),-12)
 
 #func play_random_from(list_name: String):
 	#var array: Array = soundbanks[list_name]
