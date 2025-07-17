@@ -18,7 +18,6 @@ var dead = false
 func _ready():
 	target = get_tree().get_first_node_in_group("player")
 
-
 func _physics_process(delta):
 	if target and not dead:
 		var distance = (target.global_position - self.global_position).length()
@@ -28,7 +27,7 @@ func _physics_process(delta):
 			state_machine.travel("Attack3")
 		else:
 			chase()
-	else:
+	elif not dead:
 		move_and_slide()
 
 func jump():
@@ -57,7 +56,8 @@ func jump():
 	
 	for b in bodies:
 		if b.is_in_group("player"):
-			b.get_hit(0)
+			b.get_hit(1)
+			get_hit()
 
 
 

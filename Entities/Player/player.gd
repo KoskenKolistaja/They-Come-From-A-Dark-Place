@@ -333,7 +333,7 @@ func handle_movement():
 	vector = vector.rotated(Vector3.UP,deg_to_rad(45))
 	
 	
-	if vector.length() > 0.1:
+	if vector.length() > 0.3:
 		velocity.x = (vector * SPEED).x
 		velocity.z = (vector * SPEED).z
 	else:

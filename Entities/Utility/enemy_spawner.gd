@@ -22,7 +22,7 @@ var desired_zombie_dog_time = 10000
 func _ready():
 	current_time = Time.get_ticks_msec()
 	$EnemySpawnerTimer.start()
-	zombies = MetaData.zombie_waves[MetaData.wave_number]
+	update_enemies()
 	hud.update_zombies(zombies)
 	hud.update_heavytaurs(heavytaurs)
 	hud.update_zombie_dogs(zombie_dogs)
@@ -32,6 +32,12 @@ func _physics_process(delta):
 	
 	if is_nan(desired_zombie_time):
 		desired_zombie_time = current_time
+	
+	if is_nan(desired_zombie_dog_time):
+		desired_zombie_dog_time = current_time
+	
+	if is_nan(desired_heavytaur_time):
+		desired_heavytaur_time = current_time
 	
 	if current_time > desired_zombie_time and zombies:
 		
@@ -112,7 +118,7 @@ func spawn_zombie():
 	var rand_index = random-1
 	var point = points[rand_index]
 	
-	if point.test_light() < 0.01:
+	if point.test_light() < 0.03:
 		var zombie_instance = zombie.instantiate()
 		
 		get_tree().current_scene.add_child(zombie_instance)
@@ -125,6 +131,10 @@ func spawn_zombie():
 	else:
 		desired_zombie_time = 0
 
+func reserve_zombie():
+	zombies += 1
+	hud.update_zombies(zombies)
+
 func spawn_heavytaur():
 	var points = get_tree().get_nodes_in_group("spawnpoint")
 	
@@ -133,7 +143,7 @@ func spawn_heavytaur():
 	var rand_index = random-1
 	var point = points[rand_index]
 	
-	if point.test_light() < 0.01:
+	if point.test_light() < 0.03:
 		var heavytaur_instance = heavytaur.instantiate()
 		
 		get_tree().current_scene.add_child(heavytaur_instance)
@@ -155,7 +165,7 @@ func spawn_zombie_dog():
 	var rand_index = random-1
 	var point = points[rand_index]
 	
-	if point.test_light() < 0.01:
+	if point.test_light() < 0.03:
 		var zombie_dog_instance = zombie_dog.instantiate()
 		
 		get_tree().current_scene.add_child(zombie_dog_instance)

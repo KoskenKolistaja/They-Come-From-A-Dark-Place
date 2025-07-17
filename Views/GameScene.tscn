@@ -156,9 +156,6 @@ transform = Transform3D(-0.61562, 0.777702, -0.127242, 4.31378e-08, 0.161466, 0.
 [node name="BulletStrike" parent="." instance=ExtResource("9_plkcx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 
-[node name="bat_physical" parent="." instance=ExtResource("10_butjr")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.7527, 1.4851, 1.46414)
-
 [node name="Timer" type="Timer" parent="."]
 wait_time = 10.0
 
@@ -396,7 +393,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.35034, 1, -20.9136)
 [node name="Building1" parent="." instance=ExtResource("19_p662v")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -28, 1, -22)
 
-[node name="EnemySpawner" type="Node3D" parent="."]
+[node name="EnemySpawner" type="Node3D" parent="." groups=["enemy_spawner"]]
 script = ExtResource("20_xg1jb")
 zombie = ExtResource("21_b6ocb")
 heavytaur = ExtResource("22_688g8")
@@ -420,6 +417,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.50803, 3.23627, 9.27923)
 
 [node name="HealthPayPhone" parent="." instance=ExtResource("31_nyj1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.243, 1.06176, 4.364)
+
+[node name="bat_physical" parent="." instance=ExtResource("10_butjr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75964, 1.21382, -3.7524)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/HUD/PauseMenu/HBoxContainer/ContinueButton" to="CanvasLayer/HUD" method="_on_continue_button_pressed"]

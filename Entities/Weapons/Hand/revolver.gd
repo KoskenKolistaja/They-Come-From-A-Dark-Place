@@ -49,8 +49,8 @@ func spawn_strike(spawn_position):
 
 func spawn_decal(spawn_position, parent, normal):
 	var decal_instance: Node3D = decal.instantiate()
-	var child_transform = decal_instance.global_transform
 	parent.add_child(decal_instance)
+	var child_transform = decal_instance.global_transform
 	decal_instance.global_transform = child_transform
 	decal_instance.global_position = spawn_position
 	print(decal_instance)

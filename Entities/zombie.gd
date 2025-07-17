@@ -248,6 +248,9 @@ func spawn_ragdoll():
 	var skeleton: Skeleton3D = $zombie/Armature/Skeleton3D
 	var corpse_instance = $ZombieCorpse
 	
+	if not $zombie:
+		return
+	
 	if not skeleton:
 		return
 	
@@ -291,6 +294,9 @@ func spawn_ragdoll():
 
 func apply_impact_to_bones():
 	
+	if not $ImpactArea:
+		return
+	
 	var bones = $ImpactArea.get_overlapping_bodies()
 	
 	for bone in bones:
@@ -325,3 +331,15 @@ func _on_audio_timer_timeout():
 	
 	$AudioTimer.wait_time = randi_range(2,15)
 	$AudioTimer.start()
+
+
+func _on_screen_time_timer_timeout():
+	if not $ScreenNotifier.is_on_screen():
+		reserve()
+		print("Zombie reserved!")
+		queue_free()
+
+
+func reserve():
+	var spawner = get_tree().get_first_node_in_group("enemy_spawner")
+	spawner.reserve_zombie()

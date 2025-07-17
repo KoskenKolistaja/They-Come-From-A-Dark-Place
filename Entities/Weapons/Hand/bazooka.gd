@@ -21,6 +21,7 @@ func action():
 		spawn_rocket()
 		player.rockets -= 1
 		player.update_hud_ammo()
+		$AnimationPlayer.play("shoot")
 
 func spawn_rocket():
 	var rocket_instance = rocket.instantiate()

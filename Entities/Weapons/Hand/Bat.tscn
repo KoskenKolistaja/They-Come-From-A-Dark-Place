@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://cdt3f584pthfs"]
+[gd_scene load_steps=13 format=4 uid="uid://cdt3f584pthfs"]
 
 [ext_resource type="Script" uid="uid://dnduhpnnu5322" path="res://Entities/Weapons/Hand/bat.gd" id="1_3jq0p"]
 [ext_resource type="AudioStream" uid="uid://c8eew5qn1cvnh" path="res://Assets/SFX/whoosh.ogg" id="2_3jq0p"]
@@ -76,7 +76,10 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_xymdv")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_3jq0p"]
-size = Vector3(0.696228, 0.1, 0.1)
+size = Vector3(0.696, 0.15, 0.15)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6augy"]
+size = Vector3(1, 0.1, 0.1)
 
 [sub_resource type="Animation" id="Animation_sc0oj"]
 length = 0.001
@@ -190,8 +193,16 @@ transform = Transform3D(1, -1.49012e-08, -1.42109e-14, 1.49012e-08, 1, 2.88658e-
 transform = Transform3D(1, 0, 0, 0, 1, 0, -1.05879e-21, -1.77636e-14, 1, 0.485353, 0.0844192, 0.018588)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Handle/Area3D"]
-transform = Transform3D(1, 0, -3.41061e-13, 0, 1, -2.56932e-11, 0, 5.02496e-11, 0.999987, 0.151886, -0.0175268, 1.30385e-08)
+transform = Transform3D(1, 1.49012e-08, -2.84217e-13, -1.49012e-08, 1, -2.56932e-11, -3.97904e-13, 5.02496e-11, 0.999987, 0.151886, -0.0175268, 1.30385e-08)
 shape = SubResource("BoxShape3D_3jq0p")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="Handle"]
+collision_layer = 2048
+collision_mask = 2048
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Handle/CharacterBody3D"]
+transform = Transform3D(0.999999, 2.98023e-08, 0, -2.98023e-08, 0.999999, 0, -3.52429e-12, -2.27374e-13, 1, 0.487, 0.067, 0.02)
+shape = SubResource("BoxShape3D_6augy")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
