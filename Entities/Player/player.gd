@@ -8,12 +8,14 @@ extends CharacterBody3D
 
 @export var character: PackedScene
 
+@export var revival_item: PackedScene
+
 var skeleton_ik
 var skeleton_ik2
 
 var state_machine
 
-
+@export var start_dead: bool
 
 const JUMP_STRENGTH = 4
 const SPEED = 1.75
@@ -39,6 +41,7 @@ func _physics_process(delta):
 		handle_movement()
 		handle_actions()
 	#move_camera()
+	
 
 
 func _ready():
@@ -50,6 +53,8 @@ func _ready():
 	state_machine = $Visual/Character/AnimationTree.get("parameters/playback")
 	
 	
+	if start_dead:
+		get_hit(100)
 	
 	
 	if r_starting_weapon:
@@ -70,10 +75,11 @@ func _ready():
 
 func spawn_visual():
 	if MetaData.character_skins:
-		var character_instance = MetaData.characters[MetaData.character_skins[player_id]].instantiate()
-		$Visual.add_child(character_instance)
-	else:
-		$Visual.add_child(preload("res://Entities/Player/Characters/suitman.tscn").instantiate())
+		if MetaData.character_skins.has(player_id):
+			var character_instance = MetaData.characters[MetaData.character_skins[player_id]].instantiate()
+			$Visual.add_child(character_instance)
+		else:
+			$Visual.add_child(preload("res://Entities/Player/Characters/suitman.tscn").instantiate())
 
 
 func add_money(amount):
@@ -147,9 +153,19 @@ func get_hit(damage: int = 1):
 func drop_down():
 	state_machine.travel("Death")
 	dead = true
+	$InteractionHandler.hide_label()
 	self.remove_from_group("player")
 	get_tree().current_scene.check_lose_condition()
+	
+	$CollisionShape3D.disabled = true
+	spawn_revival_item()
 
+
+func spawn_revival_item():
+	var rev_item_instance = revival_item.instantiate()
+	add_child(rev_item_instance)
+	rev_item_instance.global_position = self.global_position
+	
 
 func get_up():
 	hp = 10
@@ -157,6 +173,7 @@ func get_up():
 	state_machine.travel("Walk")
 	dead = false
 	add_to_group("player")
+	$CollisionShape3D.disabled = false
 
 func handle_actions():
 	

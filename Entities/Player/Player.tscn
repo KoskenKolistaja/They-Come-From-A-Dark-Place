@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://b0bkkr2phnoad"]
+[gd_scene load_steps=17 format=3 uid="uid://b0bkkr2phnoad"]
 
 [ext_resource type="Script" uid="uid://hrotnnh570oj" path="res://Entities/Player/player.gd" id="1_41wu2"]
 [ext_resource type="Script" uid="uid://chysh3q8pyly1" path="res://Entities/Player/interaction_handler.gd" id="2_1iada"]
 [ext_resource type="PackedScene" uid="uid://cw53pokj2npnm" path="res://Entities/Player/Characters/lara.tscn" id="2_761t5"]
+[ext_resource type="PackedScene" uid="uid://b1cshw3mra521" path="res://Entities/Utility/revival_item.tscn" id="3_hacra"]
 [ext_resource type="Texture2D" uid="uid://3me181xhwtt0" path="res://Assets/UI Textures/button_xbox_digital_y_4.png" id="3_vweq0"]
 [ext_resource type="AudioStream" uid="uid://kyb1br2shlhi" path="res://Assets/SFX/Hurt1.ogg" id="4_x44r4"]
 [ext_resource type="AudioStream" uid="uid://22k3m6on3e5e" path="res://Assets/SFX/Hurt2.ogg" id="5_761t5"]
@@ -44,6 +45,7 @@ axis_lock_angular_y = true
 axis_lock_angular_z = true
 script = ExtResource("1_41wu2")
 character = ExtResource("2_761t5")
+revival_item = ExtResource("3_hacra")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)

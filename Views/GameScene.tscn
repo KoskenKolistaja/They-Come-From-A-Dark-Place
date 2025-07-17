@@ -421,6 +421,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.243, 1.06176, 4.364)
 [node name="bat_physical" parent="." instance=ExtResource("10_butjr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75964, 1.21382, -3.7524)
 
+[node name="Player" parent="." instance=ExtResource("2_2frau")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.81322, 1.34414, 3.78233)
+start_dead = true
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/HUD/PauseMenu/HBoxContainer/ContinueButton" to="CanvasLayer/HUD" method="_on_continue_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/HUD/PauseMenu/HBoxContainer/BackToMenuButton" to="CanvasLayer/HUD" method="_on_back_to_menu_button_pressed"]

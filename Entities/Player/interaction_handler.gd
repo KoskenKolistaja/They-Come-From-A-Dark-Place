@@ -5,6 +5,9 @@ var interactables: Array
 
 
 func _physics_process(delta):
+	if get_parent().dead:
+		return
+	
 	if interactables:
 		$Label.show()
 		
@@ -31,6 +34,8 @@ func _physics_process(delta):
 func get_closest():
 	pass
 
+func hide_label():
+	$Label.hide()
 
 func get_money() -> int:
 	return get_parent().money
