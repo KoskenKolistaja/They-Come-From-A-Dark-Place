@@ -21,8 +21,11 @@ func _ready():
 	
 	
 	
-	await get_tree().create_timer(time).timeout
-	queue_free()
+	var lifetime = Timer.new()
+	lifetime.one_shot = true
+	lifetime.timeout.connect(queue_free)
+	add_child(lifetime)
+	lifetime.start(time)
 
 
 
@@ -30,6 +33,8 @@ func set_pic():
 	var pic1: MeshInstance3D = $Label3D/Picture
 	
 	var mat1: StandardMaterial3D = pic1.get_surface_override_material(0)
+	mat1 = mat1.duplicate()
+	pic1.set_surface_override_material(0, mat1)
 	
 	
 	if type == 1:
@@ -42,9 +47,11 @@ func set_pic():
 
 
 func _physics_process(delta):
-	global_position += Vector3.UP * 0.01
+	global_position += Vector3.UP * 0.6 * delta
 	
 	
 	var camera = get_viewport().get_camera_3d()
+	if camera == null:
+		return
 	
 	look_at(camera.global_position)

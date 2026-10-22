@@ -13,21 +13,17 @@ var frozen= false
 
 
 func freeze():
-	var list = get_tree().get_nodes_in_group("freezable")
-	
-	
-	if not frozen:
-		for item in list:
-			item.set_physics_process(false)
-	else:
-		for item in list:
-			item.set_physics_process(false)
+	frozen = not frozen
+	for item in get_tree().get_nodes_in_group("freezable"):
+		item.set_physics_process(not frozen)
 
 
 func _physics_process(delta):
+	if not is_instance_valid(get_tree().current_scene) or get_tree().current_scene.game_over:
+		return
 	if Input.is_action_just_pressed("pause"):
 		if get_tree().paused:
-			get_tree().paused = false
+			_on_continue_button_pressed()
 		else:
 			get_tree().paused = true
 			$PauseMenu.show()
@@ -123,4 +119,5 @@ func _on_quit_button_pressed():
 
 func _on_back_to_menu_button_pressed():
 	get_tree().paused = false
+	MetaData.reset_run()
 	get_tree().change_scene_to_file("res://Views/main_menu.tscn")

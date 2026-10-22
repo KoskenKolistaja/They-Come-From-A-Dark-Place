@@ -26,7 +26,6 @@ var index = 0
 
 func _ready():
 	play_effects()
-	character = $Armature
 	
 	var suitman = preload("res://Entities/UI Elements/SelectionCharacters/suitman.tscn")
 	
@@ -35,7 +34,6 @@ func _ready():
 	add_child(suitman_instance)
 	
 	character = suitman_instance
-	await get_tree().create_timer(0.1).timeout
 	MetaData.character_skins[player_id] = key_names[0]
 
 
@@ -44,6 +42,7 @@ func _physics_process(delta):
 
 
 func previous_character(id):
+	set_ready(false)
 	play_effects()
 	
 	index -= 1
@@ -61,6 +60,7 @@ func previous_character(id):
 	MetaData.character_skins[id] = key_names[index]
 
 func next_character(id):
+	set_ready(false)
 	play_effects()
 	
 	index += 1
@@ -79,6 +79,7 @@ func next_character(id):
 
 func play_effects():
 	var explosion_instance = explosion.instantiate()
+	explosion_instance.visual_only = true
 	add_child(explosion_instance)
 	explosion_instance.scale = Vector3(0.5,0.5,0.5)
 

@@ -23,7 +23,7 @@ func _physics_process(delta):
 	var ratio = (desired - self.global_position).length()
 	
 	
-	movement_vector = movement_vector.move_toward(desired,ratio*0.01)
+	movement_vector = movement_vector.lerp(desired, 1.0 - exp(-0.6 * delta))
 	
 	self.global_position = movement_vector
 

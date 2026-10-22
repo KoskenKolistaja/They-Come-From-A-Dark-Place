@@ -1,8 +1,10 @@
 extends GPUParticles3D
 
 const impact_strength = 20
+@export_range(0.0, 1.0, 0.05) var upward_bias: float = 0.35
 
 var player
+var visual_only = false
 
 @export var explosion_sound: AudioStream
 
@@ -13,6 +15,8 @@ func _ready():
 	$Fire.emitting = true
 	$Smoke.emitting = true
 	$AnimationPlayer.play("explode")
+	if visual_only:
+		return
 	
 	await get_tree().physics_frame
 	await get_tree().physics_frame
@@ -23,9 +27,9 @@ func _ready():
 			var dic = {}
 			
 			var start_point = self.global_position
-			var end_point = b.global_position
+			var end_point = b.global_position + Vector3.UP
 			
-			var direction = (end_point - start_point).normalized()
+			var direction = get_blast_direction(end_point - start_point)
 			
 			#dic = {"start_point" : start_point , "end_point" : end_point , "strength" : 10, "killer": player}
 			dic = {"collision_point": b.global_position + Vector3.UP, "direction": direction, "strength" : impact_strength, "killer": player}
@@ -39,10 +43,16 @@ func _ready():
 		elif b.has_method("apply_impulse"):
 			var vector = b.global_position - self.global_position
 			var effect = get_explosion_effect(vector.length(),10)
-			b.apply_impulse(vector.normalized()*effect*20,self.global_position)
+			b.apply_impulse(get_blast_direction(vector) * effect * impact_strength, global_position - b.global_position)
 	
 	
 	get_tree().current_scene.shake_camera()
+
+func get_blast_direction(offset: Vector3) -> Vector3:
+	var outward = offset.normalized()
+	# Ground-level blasts lift the body instead of driving it into the floor.
+	outward.y = maxf(outward.y, 0.0) + upward_bias
+	return outward.normalized()
 
 func get_explosion_effect(distance: float, max_radius: float) -> float:
 	if distance >= max_radius:

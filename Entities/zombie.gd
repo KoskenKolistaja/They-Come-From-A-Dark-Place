@@ -1,345 +1,176 @@
 extends CharacterBody3D
 
-
 const SPEED = 3.0
-const JUMP_VELOCITY = 4.5
-
 @export var corpse: PackedScene
-
 @export var death_sounds: AudioStream
 @export var idle_sounds: AudioStream
 @export var hit_mark: AudioStream
-
 @onready var state_machine = $zombie/AnimationTree.get("parameters/playback")
-
 var dead = false
-
 var desired = Vector3.FORWARD
-
 var target
-
 var killer
-
-var award_money: int = 10
-
-var impact: Dictionary
-
-var bone_name_map = {
-	"mixamorig_Hips": "spine",
-	"mixamorig_Head": "spine_004",
-	"mixamorig_Spine2": "spine_002",
-	"mixamorig_LeftShoulder": "upper_arm_L",
-	"mixamorig_LeftForeArm": "forearm_L",
-	"mixamorig_RightShoulder": "upper_arm_R",
-	"mixamorig_RightForeArm": "forearm_R"
-}
-
-
-enum STATE {
-	IDLE,
-	CHASING,
-	HITTING,
-	DEAD
-}
-
+var award_money = 10
+var impact: Dictionary = {}
 var hp = 1
+var color: Color
 
+enum STATE { IDLE, CHASING, HITTING, DEAD }
 var state = STATE.IDLE
-
-var color
-
+var bone_name_map = {
+	"spine": "mixamorig_Hips",
+	"spine.001": "mixamorig_Spine",
+	"spine.002": "mixamorig_Spine1",
+	"spine.003": "mixamorig_Spine2",
+	"spine.004": "mixamorig_Neck",
+	"spine.005": "mixamorig_Head",
+	"spine.006": "mixamorig_HeadTop_End",
+	"upper_arm.L": "mixamorig_LeftArm",
+	"forearm.L": "mixamorig_LeftForeArm",
+	"hand.L": "mixamorig_LeftHand",
+	"upper_arm.R": "mixamorig_RightArm",
+	"forearm.R": "mixamorig_RightForeArm",
+	"hand.R": "mixamorig_RightHand",
+	"thigh.L": "mixamorig_LeftUpLeg",
+	"shin.L": "mixamorig_LeftLeg",
+	"foot.L": "mixamorig_LeftFoot",
+	"toe.L": "mixamorig_LeftToeBase",
+	"thigh.R": "mixamorig_RightUpLeg",
+	"shin.R": "mixamorig_RightLeg",
+	"foot.R": "mixamorig_RightFoot",
+	"toe.R": "mixamorig_RightToeBase"
+}
 
 func _ready():
-	$AudioTimer.wait_time = randf_range(2,15)
-	$AudioTimer.start()
-	
-	
-	$TargetTimer.wait_time = randf_range(0.5,1)
-	
-	target = get_tree().get_first_node_in_group("player")
-	state_machine.travel("running")
-	
-	set_color()
+	$AudioTimer.start(randf_range(2, 15))
+	$TargetTimer.start(randf_range(0.5, 1.0))
+	update_target()
+	var mesh = $"zombie/Armature/Skeleton3D/Character rough_004"
+	var mat = mesh.get_surface_override_material(0).duplicate()
+	mesh.set_surface_override_material(0, mat)
+	color = Color(0.351, 0.467, 0.405).lerp(Color(randf(), randf(), randf()), 0.2)
+	mat.albedo_color = color
+
+func _physics_process(delta):
+	if dead:
+		return
+	if not is_instance_valid(target) or not target.is_in_group("player"):
+		update_target()
+	if not is_instance_valid(target):
+		return
+	var vector = target.global_position - global_position
+	var direction = Vector3(vector.x, 0, vector.z).normalized()
+	desired = desired.move_toward(direction, 6.0 * delta)
+	rotation.y = -desired.signed_angle_to(Vector3.FORWARD, Vector3.UP)
+	match state:
+		STATE.HITTING:
+			if state_machine.get_current_node() != "punch":
+				state = STATE.IDLE
+		_:
+			if state != STATE.CHASING:
+				state_machine.travel("running")
+				state = STATE.CHASING
+			velocity.x = desired.x * SPEED
+			velocity.z = desired.z * SPEED
+			if not is_on_floor():
+				velocity += get_gravity() * delta
+			else:
+				velocity.y = 0.0
+			move_and_slide()
+			for body in $Area3D.get_overlapping_bodies():
+				if body.is_in_group("player"):
+					state = STATE.HITTING
+					state_machine.travel("punch")
+					break
+
+func check_for_hit():
+	if dead:
+		return
+	for body in $Area3D.get_overlapping_bodies():
+		if body.is_in_group("player"):
+			body.get_hit(10)
+
+func update_target():
+	target = null
+	var closest_distance = INF
+	for player in get_tree().get_nodes_in_group("player"):
+		var distance = global_position.distance_squared_to(player.global_position)
+		if distance < closest_distance:
+			closest_distance = distance
+			target = player
 
 func set_killer(object):
 	killer = object
 
-func set_color():
-	var mesh: MeshInstance3D = $"zombie/Armature/Skeleton3D/Character rough_004"
-	var mat: StandardMaterial3D = mesh.get_surface_override_material(0)
-	
-	var rand_color = Color(randf(),randf(),randf())
-	var org_color = Color(0.351, 0.467, 0.405)
-	
-	var mixed_color = org_color.lerp(rand_color,0.2)
-	
-	color = mixed_color
-	mat.albedo_color = mixed_color
-
-
-func _physics_process(delta):
-	match state:
-		STATE.IDLE:
-			idle()
-		STATE.CHASING:
-			chase()
-		STATE.HITTING:
-			hitting()
-		STATE.DEAD:
-			pass
-	
-
-
-
-
-
-
-
-func idle():
-	state_machine.travel("idle")
-	
-	if target:
-		change_state(STATE.CHASING)
-
-
-func check_for_hit():
-	var bodies = $Area3D.get_overlapping_bodies()
-	
-	for item in bodies:
-		if item.has_method("get_hit"):
-			item.get_hit(10)
-
-
-func hitting():
-	var current_state = state_machine.get_current_node()
-	
-	if current_state != "punch":
-		change_state(STATE.IDLE)
-	
-	if target:
-		var vector = target.global_position - self.global_position
-		
-		var direction = Vector3(vector.x,0,vector.z).normalized()
-		
-		desired = desired.move_toward(direction,0.1)
-		
-		rotation_degrees.y = -rad_to_deg(desired.signed_angle_to(Vector3.FORWARD,Vector3.UP))
-
-func change_state(new_state):
-	state = new_state
-
-
-func chase():
-	state_machine.travel("running")
-	if not is_instance_valid(target):
-		target = get_tree().get_first_node_in_group("player")
-		return
-	
-	if not target:
-		change_state(STATE.IDLE)
-	
-	var vector = target.global_position - self.global_position
-	
-	var direction = Vector3(vector.x,0,vector.z).normalized()
-	
-	desired = desired.move_toward(direction,0.1)
-	
-	rotation_degrees.y = -rad_to_deg(desired.signed_angle_to(Vector3.FORWARD,Vector3.UP))
-	
-	velocity = desired * SPEED
-	
-	if not $RayCast3D.is_colliding():
-		velocity.y -= 1
-	else:
-		velocity.y = 0
-	
-	
-	
-	var bodies = $Area3D.get_overlapping_bodies()
-	
-	for b in bodies:
-		if b.is_in_group("player"):
-			change_state(STATE.HITTING)
-			state_machine.travel("punch")
-
-	
-	move_and_slide()
-
-
-func update_target():
-	target = get_closest_player()
-	if not target or not is_instance_valid(target):
-		target = null
-		return
-
-func get_closest_player():
-	var players = get_tree().get_nodes_in_group("player")
-	var closest
-	
-	if players:
-		closest = players[0]
-	else:
-		return
-	
-	for p in players:
-		var closest_distance = (closest.global_position - self.global_position).length()
-		var current_distance = (p.global_position - self.global_position).length()
-		if current_distance < closest_distance:
-			closest = p
-	
-	return closest
-
-
-func store_impact(exported_impact):
-	impact = exported_impact
-	if exported_impact["killer"]:
-		killer = exported_impact["killer"]
+func store_impact(data):
+	if not dead:
+		impact = data
+		killer = data.get("killer")
 
 func get_hit(damage: int = 1):
+	if dead:
+		return
 	Audio.assign_sound(hit_mark)
 	hp -= damage
-	
 	if hp <= 0:
 		die()
 
-func delete():
-	var r_number = randf_range(0,5)
-	await get_tree().create_timer(r_number).timeout
-	change_state(STATE.DEAD)
-	Audio.assign_sound(death_sounds,-20.0)
-	spawn_ragdoll()
-
-
-
-
-
 func die():
-	Audio.assign_sound(death_sounds,-12.0)
-	
-	if killer:
+	if dead:
+		return
+	dead = true
+	state = STATE.DEAD
+	$zombie/AnimationTree.active = false
+	remove_from_group("enemy")
+	set_physics_process(false)
+	$CollisionShape3D.set_deferred("disabled", true)
+	$AudioTimer.stop()
+	$TargetTimer.stop()
+	$ScreenTimeTimer.stop()
+	Audio.assign_sound(death_sounds, -12.0)
+	if is_instance_valid(killer):
 		killer.add_money(award_money)
 		killer.update_hud_money()
-	change_state(STATE.DEAD)
-	spawn_ragdoll()
-	#$CollisionShape3D.disabled = true
-	#var rand_int = randi_range(1,3)
-	#
-	#var death_anim = "death" + str(rand_int)
-	#
-	#state = STATE.DEAD
-	#
-	#state_machine.travel(death_anim)
-	#dead = true
-	#await get_tree().create_timer(20).timeout
-	#queue_free()
+	call_deferred("spawn_ragdoll")
 
-
-func _on_area_3d_body_entered(body):
-	pass # Replace with function body.
-
-
-func _on_target_timer_timeout():
-	update_target()
-
-
-func spawn_ragdoll():
-	MetaData.add_ragdoll(self)
-	
-	var skeleton: Skeleton3D = $zombie/Armature/Skeleton3D
-	var corpse_instance = $ZombieCorpse
-	
-	if not $zombie:
+func delete():
+	# Wave cleanup does not award money or build dozens of new ragdolls.
+	if dead:
 		return
-	
-	if not skeleton:
-		return
-	
-	corpse_instance.global_transform = global_transform
-	
-	if impact:
-		corpse_instance.impact = impact
-		$ImpactArea.global_position = impact["collision_point"]
-	
-	get_tree().current_scene.add_child(corpse_instance)
-	corpse_instance.set_color(color)
-	
-	
-	var corpse_skeleton: Skeleton3D = corpse_instance.get_node("metarig/Skeleton3D")
-	transfer_named_bones(skeleton, corpse_skeleton,bone_name_map)
-	
-	
-	corpse_skeleton.physical_bones_start_simulation()
-	
-	
-	transfer_named_bones(skeleton, corpse_skeleton,bone_name_map)
-	
-	$CollisionShape3D.disabled = true
-	
-	await get_tree().physics_frame
-	
-	if impact:
-		apply_impact_to_bones()
-	
-	$ZombieCorpse.show()
-	$zombie.queue_free()
-	$Area3D.queue_free()
-	$ImpactArea.queue_free()
-	$AudioTimer.queue_free()
-	$TargetTimer.queue_free()
-	
-	await get_tree().create_timer(50).timeout
-	MetaData.delete_ragdoll(self)
+	dead = true
+	remove_from_group("enemy")
 	queue_free()
 
-
-func apply_impact_to_bones():
-	
-	if not $ImpactArea:
+func spawn_ragdoll():
+	if MetaData.max_ragdolls <= 0 or corpse == null:
+		queue_free()
 		return
-	
-	var bones = $ImpactArea.get_overlapping_bodies()
-	
-	for bone in bones:
-		var impulse_vector = impact["direction"] * impact["strength"]
-		var point = impact["collision_point"]
-		
-		bone.apply_impulse(impulse_vector,point)
+	var ragdoll = corpse.instantiate()
+	ragdoll.transform = transform
+	get_parent().add_child(ragdoll)
+	var skeleton: Skeleton3D = $zombie/Armature/Skeleton3D
+	ragdoll.copy_pose_from(skeleton, bone_name_map)
+	$zombie.hide()
+	ragdoll.activate(impact, color)
+	queue_free()
 
-func transfer_named_bones(animated_skeleton: Skeleton3D, corpse_skeleton: Skeleton3D, bone_map: Dictionary) -> void:
-	for anim_bone_name in bone_map.keys():
-		var ragdoll_node_name = bone_map[anim_bone_name]
+func _on_area_3d_body_entered(_body):
+	pass
 
-		var anim_bone_index = animated_skeleton.find_bone(anim_bone_name)
-		if anim_bone_index == -1:
-			push_warning("Missing animated bone: " + anim_bone_name)
-			continue
-
-		var anim_pose = animated_skeleton.global_transform * animated_skeleton.get_bone_global_pose_no_override(anim_bone_index)
-
-		var phys_bone_node: Node = corpse_skeleton.get_node_or_null(ragdoll_node_name)
-		if phys_bone_node and phys_bone_node is PhysicalBone3D:
-			phys_bone_node.global_transform = anim_pose
-			phys_bone_node.scale = Vector3(1,1,1)
-		else:
-			push_warning("Missing or invalid ragdoll bone node: " + ragdoll_node_name)
-
+func _on_target_timer_timeout():
+	if not dead:
+		update_target()
 
 func _on_audio_timer_timeout():
-	
+	if dead:
+		return
 	$AudioStreamPlayer3D.stream = idle_sounds
 	$AudioStreamPlayer3D.play()
-	
-	$AudioTimer.wait_time = randi_range(2,15)
-	$AudioTimer.start()
-
+	$AudioTimer.start(randf_range(2, 15))
 
 func _on_screen_time_timer_timeout():
-	if not $ScreenNotifier.is_on_screen():
-		reserve()
-		print("Zombie reserved!")
-		queue_free()
-
-
-func reserve():
-	var spawner = get_tree().get_first_node_in_group("enemy_spawner")
-	spawner.reserve_zombie()
+	if not dead and not $ScreenNotifier.is_on_screen():
+		var spawner = get_tree().get_first_node_in_group("enemy_spawner")
+		if is_instance_valid(spawner):
+			spawner.reserve_zombie()
+		delete()

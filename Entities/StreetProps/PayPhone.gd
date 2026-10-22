@@ -31,7 +31,7 @@ func action(caller):
 			player.bullets += 100
 			spawn_info_label("+100")
 		elif type == 2:
-			player.rockets += 100
+			player.rockets += 10
 			spawn_info_label("+10")
 		else:
 			player.add_hp(10)

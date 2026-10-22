@@ -51,7 +51,6 @@ normal_scale = 15.0
 normal_texture = ExtResource("5_rp5ft")
 ao_enabled = true
 ao_texture = ExtResource("3_s275v")
-heightmap_enabled = true
 heightmap_texture = ExtResource("4_pml6m")
 uv1_scale = Vector3(0.5, 0.5, 0.5)
 uv1_triplanar = true
@@ -266,7 +265,6 @@ normal_enabled = true
 normal_texture = ExtResource("5_rp5ft")
 ao_enabled = true
 ao_texture = ExtResource("3_s275v")
-heightmap_enabled = true
 heightmap_texture = ExtResource("4_pml6m")
 uv1_triplanar = true
 
@@ -293,7 +291,6 @@ albedo_texture = ExtResource("10_1soli")
 normal_enabled = true
 normal_scale = 2.0
 normal_texture = ExtResource("12_lmqi1")
-heightmap_enabled = true
 heightmap_texture = ExtResource("11_4pbjs")
 uv1_triplanar = true
 
@@ -305,7 +302,6 @@ normal_scale = 2.0
 normal_texture = ExtResource("16_16yl7")
 ao_enabled = true
 ao_texture = ExtResource("14_0ttnk")
-heightmap_enabled = true
 heightmap_texture = ExtResource("15_v3vm6")
 uv1_triplanar = true
 
@@ -524,7 +520,6 @@ normal_scale = 5.0
 normal_texture = ExtResource("5_rp5ft")
 ao_enabled = true
 ao_texture = ExtResource("3_s275v")
-heightmap_enabled = true
 heightmap_texture = ExtResource("4_pml6m")
 uv1_triplanar = true
 
@@ -535,7 +530,6 @@ normal_scale = 2.0
 normal_texture = ExtResource("21_7g2g1")
 ao_enabled = true
 ao_texture = ExtResource("23_7t8bs")
-heightmap_enabled = true
 heightmap_texture = ExtResource("20_knkse")
 uv1_triplanar = true
 
@@ -546,7 +540,6 @@ normal_scale = 3.0
 normal_texture = ExtResource("26_7t8bs")
 ao_enabled = true
 ao_texture = ExtResource("24_45wy7")
-heightmap_enabled = true
 heightmap_deep_parallax = true
 heightmap_min_layers = 8
 heightmap_max_layers = 32

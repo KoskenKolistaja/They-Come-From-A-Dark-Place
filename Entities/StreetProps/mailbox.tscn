@@ -140,7 +140,6 @@ normal_scale = 2.0
 normal_texture = ExtResource("3_u23rt")
 ao_enabled = true
 ao_texture = ExtResource("1_qjowv")
-heightmap_enabled = true
 heightmap_texture = ExtResource("2_x02bw")
 uv1_triplanar = true
 

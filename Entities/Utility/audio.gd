@@ -53,8 +53,21 @@ func _process(delta):
 
 
 func set_loop(song):
+	next_song = null
 	$Music.stream = song
 	looping = true
+	$Music.play()
+
+func _exit_tree():
+	stop_all()
+
+func stop_all():
+	next_song = null
+	$Music.stop()
+	$Music.stream = null
+	for item in $SFX.get_children():
+		item.stop()
+		item.stream = null
 
 func _ready():
 	sfx_players = $SFX.get_children()

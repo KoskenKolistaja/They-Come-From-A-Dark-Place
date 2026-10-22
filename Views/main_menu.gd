@@ -6,9 +6,14 @@ extends Control
 func _ready():
 	$Base/VBoxContainer/StartButton.grab_focus()
 	generate_input_map()
+	$Settings/VBoxContainer/OptionButton.select(MetaData.anti_aliasing)
+	$Settings/VBoxContainer/SpinBox.set_value_no_signal(MetaData.max_ragdolls)
+	$Settings/VBoxContainer/GraphicsQuality.select(MetaData.graphics_quality)
+	MetaData.apply_graphics(get_viewport())
 
 
 func _on_start_button_pressed():
+	MetaData.reset_run()
 	get_tree().change_scene_to_file("res://Views/character_selection.tscn")
 
 
@@ -22,19 +27,8 @@ func _on_quit_button_pressed():
 
 
 func _on_option_button_item_selected(index):
-	var viewport_rid = get_tree().root.get_viewport_rid()
-
-	match index:
-		0:  # No AA
-			RenderingServer.viewport_set_msaa_3d(viewport_rid, RenderingServer.VIEWPORT_MSAA_DISABLED)
-		1:  # FXAA
-			RenderingServer.viewport_set_msaa_3d(viewport_rid, RenderingServer.VIEWPORT_MSAA_DISABLED)
-		2:  # MSAA 2x
-			RenderingServer.viewport_set_msaa_3d(viewport_rid, RenderingServer.VIEWPORT_MSAA_2X)
-		3:  # MSAA 4x
-			RenderingServer.viewport_set_msaa_3d(viewport_rid, RenderingServer.VIEWPORT_MSAA_4X)
-		4:  # MSAA 8x
-			RenderingServer.viewport_set_msaa_3d(viewport_rid, RenderingServer.VIEWPORT_MSAA_8X)
+	MetaData.anti_aliasing = index
+	MetaData.apply_graphics(get_viewport())
 
 
 func _on_back_button_pressed():
@@ -44,7 +38,11 @@ func _on_back_button_pressed():
 
 
 func _on_spin_box_value_changed(value):
-	MetaData.max_ragdolls = value
+	MetaData.max_ragdolls = int(value)
+
+func _on_graphics_quality_item_selected(index):
+	MetaData.graphics_quality = index
+	MetaData.apply_graphics(get_viewport())
 
 
 

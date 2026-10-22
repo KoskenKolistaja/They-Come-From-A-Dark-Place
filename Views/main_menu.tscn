@@ -68,14 +68,13 @@ stretch_mode = 4
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
+anchors_preset = 10
 anchor_right = 1.0
-offset_left = -482.0
-offset_top = 58.0
-offset_right = -68.0
-offset_bottom = 142.0
-grow_horizontal = 0
+offset_left = 24.0
+offset_top = 32.0
+offset_right = -24.0
+offset_bottom = 116.0
+grow_horizontal = 2
 theme_override_colors/font_color = Color(1, 0.26, 0.26, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -84,8 +83,9 @@ theme_override_constants/shadow_offset_y = 2
 theme_override_constants/outline_size = 12
 theme_override_constants/shadow_outline_size = 12
 theme_override_fonts/font = ExtResource("2_egtk6")
-theme_override_font_sizes/font_size = 71
+theme_override_font_sizes/font_size = 40
 text = "THEY COME FROM A DARK PLACE"
+horizontal_alignment = 1
 
 [node name="Base" type="Panel" parent="."]
 layout_direction = 1
@@ -189,10 +189,10 @@ text = "Anti-Aliasing"
 
 [node name="SpinBox" type="SpinBox" parent="Settings/VBoxContainer"]
 layout_mode = 2
-min_value = 5.0
-max_value = 500.0
+min_value = 0.0
+max_value = 100.0
 step = 5.0
-value = 50.0
+value = 20.0
 
 [node name="Label" type="Label" parent="Settings/VBoxContainer/SpinBox"]
 layout_mode = 1
@@ -205,6 +205,22 @@ offset_right = 20.0
 offset_bottom = -4.0
 grow_horizontal = 2
 text = "Max Ragdolls"
+
+[node name="GraphicsQuality" type="OptionButton" parent="Settings/VBoxContainer"]
+layout_mode = 2
+selected = 1
+item_count = 3
+popup/item_0/text = "Low"
+popup/item_0/id = 0
+popup/item_1/text = "Balanced"
+popup/item_1/id = 1
+popup/item_2/text = "High"
+popup/item_2/id = 2
+
+[node name="Label" type="Label" parent="Settings/VBoxContainer/GraphicsQuality"]
+offset_top = -27.0
+offset_bottom = -4.0
+text = "Graphics"
 
 [node name="BackButton" type="Button" parent="Settings"]
 layout_mode = 1
@@ -224,4 +240,5 @@ text = "Back"
 [connection signal="pressed" from="Base/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="item_selected" from="Settings/VBoxContainer/OptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="value_changed" from="Settings/VBoxContainer/SpinBox" to="." method="_on_spin_box_value_changed"]
+[connection signal="item_selected" from="Settings/VBoxContainer/GraphicsQuality" to="." method="_on_graphics_quality_item_selected"]
 [connection signal="pressed" from="Settings/BackButton" to="." method="_on_back_button_pressed"]

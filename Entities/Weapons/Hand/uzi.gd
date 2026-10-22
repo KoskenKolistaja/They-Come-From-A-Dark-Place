@@ -52,7 +52,7 @@ func action():
 
 func spawn_trace(collision_point):
 	var ray_start = $Handle/Cube/RayCast3D.global_position
-	var ray_end = to_global($Handle/Cube/RayCast3D.get_target_position())
+	var ray_end = $Handle/Cube/RayCast3D.to_global($Handle/Cube/RayCast3D.target_position)
 	var direction = (ray_end - ray_start).normalized()
 	var tracer_instance = tracer.instantiate()
 	if collision_point:
@@ -69,11 +69,11 @@ func spawn_strike(spawn_position):
 
 func spawn_decal(spawn_position, parent, normal):
 	var decal_instance: Node3D = decal.instantiate()
-	var child_transform = decal_instance.global_transform
 	parent.add_child(decal_instance)
-	decal_instance.global_transform = child_transform
-	decal_instance.global_position = spawn_position
-	decal_instance.look_at_from_position(decal_instance.global_position,(decal_instance.global_position + normal*50))
+	if normal.is_zero_approx():
+		normal = Vector3.UP
+	var up = Vector3.FORWARD if absf(normal.dot(Vector3.UP)) > 0.99 else Vector3.UP
+	decal_instance.global_transform = Transform3D(Basis.looking_at(normal, up), spawn_position)
 
 
 

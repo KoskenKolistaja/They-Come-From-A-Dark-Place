@@ -1,38 +1,35 @@
 extends Area3D
 
-var interactables: Array
+var interactables: Array = []
 
-
-
-func _physics_process(delta):
+func _physics_process(_delta):
 	if get_parent().dead:
+		hide_label()
 		return
-	
-	if interactables:
-		$Label.show()
-		
-		var interactable = interactables[0]
-		
-		if interactable.text:
-			$Label.text = interactable.text
-		
-		var camera: Camera3D = get_viewport().get_camera_3d()
-		
-		var twod_position = camera.unproject_position(interactable.global_position)
-		
-		$Label.global_position = twod_position
-		
-		
-		if Input.is_action_just_pressed("p%d_interact" % get_parent().player_id):
-			interactable.action(self)
-			return
-		
-	else:
-		$Label.hide()
-
+	interactables = interactables.filter(func(item): return is_instance_valid(item) and not item.is_queued_for_deletion() and item.is_in_group("interactable"))
+	var interactable = get_closest()
+	if interactable == null:
+		hide_label()
+		return
+	var camera = get_viewport().get_camera_3d()
+	if camera == null or camera.is_position_behind(interactable.global_position):
+		hide_label()
+		return
+	$Label.show()
+	$Label.text = interactable.text
+	$Label.global_position = camera.unproject_position(interactable.global_position)
+	if Input.is_action_just_pressed("p%d_interact" % get_parent().player_id):
+		interactable.action(self)
 
 func get_closest():
-	pass
+	var closest = null
+	var distance = INF
+	for item in interactables:
+		var candidate = global_position.distance_squared_to(item.global_position)
+		if candidate < distance:
+			distance = candidate
+			closest = item
+	return closest
 
 func hide_label():
 	$Label.hide()
@@ -47,9 +44,8 @@ func update_money():
 	get_parent().update_hud_money()
 
 func _on_body_entered(body):
-	if body.is_in_group("interactable"):
+	if body.is_in_group("interactable") and not interactables.has(body):
 		interactables.append(body)
-
 
 func _on_body_exited(body):
 	interactables.erase(body)

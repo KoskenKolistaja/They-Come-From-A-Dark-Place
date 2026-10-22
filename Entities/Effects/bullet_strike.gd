@@ -5,5 +5,8 @@ extends GPUParticles3D
 func _ready():
 	emitting = true
 	
-	await get_tree().create_timer(1).timeout
-	queue_free()
+	var lifetime = Timer.new()
+	lifetime.one_shot = true
+	lifetime.timeout.connect(queue_free)
+	add_child(lifetime)
+	lifetime.start(1.0)

@@ -33,19 +33,20 @@ var money = 500
 var hp = 100
 
 var dead = false
+var initialized = false
+var active_revival_item: Node3D
 
 
 func _physics_process(delta):
 	
-	if not dead:
-		handle_movement()
+	if initialized and not dead:
+		handle_movement(delta)
 		handle_actions()
 	#move_camera()
 	
 
 
 func _ready():
-	await  get_tree().physics_frame
 	spawn_visual()
 	
 	skeleton_ik = $Visual/Character/Armature/Skeleton3D/SkeletonIK3D
@@ -53,8 +54,7 @@ func _ready():
 	state_machine = $Visual/Character/AnimationTree.get("parameters/playback")
 	
 	
-	if start_dead:
-		get_hit(100)
+	initialized = true
 	
 	
 	if r_starting_weapon:
@@ -71,15 +71,14 @@ func _ready():
 	update_hud_ammo()
 	update_hud_money()
 	update_hud_health()
+	if start_dead:
+		get_hit(100)
 
 
 func spawn_visual():
-	if MetaData.character_skins:
-		if MetaData.character_skins.has(player_id):
-			var character_instance = MetaData.characters[MetaData.character_skins[player_id]].instantiate()
-			$Visual.add_child(character_instance)
-		else:
-			$Visual.add_child(preload("res://Entities/Player/Characters/suitman.tscn").instantiate())
+	var skin = MetaData.character_skins.get(player_id, "suitman")
+	var character_instance = MetaData.characters.get(skin, MetaData.suitman).instantiate()
+	$Visual.add_child(character_instance)
 
 
 func add_money(amount):
@@ -135,6 +134,8 @@ func set_ik2_target():
 	$Visual/Character/Armature/Skeleton3D/SkeletonIK3D2.start()
 
 func get_hit(damage: int = 1):
+	if dead or not initialized:
+		return
 	hp -= damage
 	
 	$AudioStreamPlayer3D.play()
@@ -143,9 +144,9 @@ func get_hit(damage: int = 1):
 	update_hud_health()
 	
 	if hp <= 0:
-		if $Visual/Pivot/HandItem.get_child(0):
+		if $Visual/Pivot/HandItem.get_child_count() > 0:
 			drop_r_weapon()
-		if $Visual/Pivot2/HandItem.get_child(0):
+		if $Visual/Pivot2/HandItem.get_child_count() > 0:
 			drop_l_weapon()
 		drop_down()
 
@@ -157,23 +158,30 @@ func drop_down():
 	self.remove_from_group("player")
 	get_tree().current_scene.check_lose_condition()
 	
-	$CollisionShape3D.disabled = true
-	spawn_revival_item()
+	$CollisionShape3D.set_deferred("disabled", true)
+	call_deferred("spawn_revival_item")
 
 
 func spawn_revival_item():
+	if not is_inside_tree() or not dead or is_instance_valid(active_revival_item):
+		return
 	var rev_item_instance = revival_item.instantiate()
+	active_revival_item = rev_item_instance
 	add_child(rev_item_instance)
-	rev_item_instance.global_position = self.global_position
 	
 
 func get_up():
+	if not dead:
+		return
+	if is_instance_valid(active_revival_item):
+		active_revival_item.queue_free()
+	active_revival_item = null
 	hp = 10
 	update_hud_health()
 	state_machine.travel("Walk")
 	dead = false
 	add_to_group("player")
-	$CollisionShape3D.disabled = false
+	$CollisionShape3D.set_deferred("disabled", false)
 
 func handle_actions():
 	
@@ -192,13 +200,13 @@ func handle_actions():
 	
 	
 	if Input.is_action_just_pressed("p%d_pickup_right" % player_id):
-		if $Visual/Pivot/HandItem.get_child(0):
+		if $Visual/Pivot/HandItem.get_child_count() > 0:
 			drop_r_weapon()
 		else:
 			pickup_r_weapon()
 	
 	if Input.is_action_just_pressed("p%d_pickup_left" % player_id):
-		if $Visual/Pivot2/HandItem.get_child(0):
+		if $Visual/Pivot2/HandItem.get_child_count() > 0:
 			drop_l_weapon()
 		else:
 			pickup_l_weapon()
@@ -231,7 +239,7 @@ func handle_actions():
 
 
 func pickup_r_weapon():
-	var items = $Area3D.get_overlapping_bodies()
+	var items = $Area3D.get_overlapping_bodies().filter(func(item): return not item.is_queued_for_deletion() and "hand_item" in item)
 	
 	
 	if not items:
@@ -262,7 +270,7 @@ func drop_r_weapon():
 	var weapon = MetaData.weapons[type]
 	
 	var weapon_instance = weapon.instantiate()
-	weapon_instance.global_transform = $Visual/Pivot/HandItem.global_transform
+	weapon_instance.transform = get_tree().current_scene.global_transform.affine_inverse() * $Visual/Pivot/HandItem.global_transform
 	
 	#if ammo != null:
 		#weapon_instance.ammo = ammo
@@ -275,7 +283,7 @@ func drop_r_weapon():
 	#$Visual/Suitman/Armature/Skeleton3D/SkeletonIK3D.stop()
 
 func pickup_l_weapon():
-	var items = $Area3D.get_overlapping_bodies()
+	var items = $Area3D.get_overlapping_bodies().filter(func(item): return not item.is_queued_for_deletion() and "hand_item" in item)
 	
 	if not items:
 		return
@@ -305,7 +313,7 @@ func drop_l_weapon():
 	var weapon = MetaData.weapons[type]
 	
 	var weapon_instance = weapon.instantiate()
-	weapon_instance.global_transform = $Visual/Pivot2/HandItem.global_transform
+	weapon_instance.transform = get_tree().current_scene.global_transform.affine_inverse() * $Visual/Pivot2/HandItem.global_transform
 	
 	#if ammo != null:
 		#weapon_instance.ammo = ammo
@@ -336,16 +344,16 @@ func clear_left_hand():
 	var tween = create_tween()
 	tween.tween_method(set_ik2_influence, 1.0, 0.0, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
-func handle_movement():
+func handle_movement(delta: float):
 	
 	
 	
 	var x = Input.get_joy_axis(player_id-1,JOY_AXIS_LEFT_X)
 	var y = Input.get_joy_axis(player_id-1,JOY_AXIS_LEFT_Y)
 	
-	var vector2 = Vector2(x,y)
+	var vector2 = Vector2(x,y).limit_length()
 	
-	var vector = Vector3(x,0,y)
+	var vector = Vector3(vector2.x,0,vector2.y)
 	
 	vector = vector.rotated(Vector3.UP,deg_to_rad(45))
 	
@@ -361,16 +369,16 @@ func handle_movement():
 	var ry = Input.get_joy_axis(player_id-1,JOY_AXIS_RIGHT_Y)
 	
 	if abs(rx) > 0.2:
-		$Visual.rotation_degrees.y += -rx * 2
+		$Visual.rotation_degrees.y += -rx * 120.0 * delta
 	if abs(ry) > 0.2:
 		if ry > 0:
 			if not $Visual/Pivot.rotation_degrees.x < -52:
-				$Visual/Pivot.rotation_degrees.x += -ry * 1.5
-				$Visual/Pivot2.rotation_degrees.x += -ry * 1.5
+				$Visual/Pivot.rotation_degrees.x += -ry * 90.0 * delta
+				$Visual/Pivot2.rotation_degrees.x += -ry * 90.0 * delta
 		else:
 			if not $Visual/Pivot.rotation_degrees.x > 80:
-				$Visual/Pivot.rotation_degrees.x += -ry * 1.5
-				$Visual/Pivot2.rotation_degrees.x += -ry * 1.5
+				$Visual/Pivot.rotation_degrees.x += -ry * 90.0 * delta
+				$Visual/Pivot2.rotation_degrees.x += -ry * 90.0 * delta
 			pass
 	
 	var desired_animation_vector:Vector2 = Vector2(x,-y)
@@ -392,7 +400,7 @@ func handle_movement():
 		if Input.is_action_just_pressed("p%d_jump" % player_id):
 			velocity.y += 1 * JUMP_STRENGTH
 	else:
-		velocity.y -= 0.2
+		velocity += get_gravity() * delta
 	
 	move_and_slide()
 
