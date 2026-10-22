@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://cy8bymex7ky6p"]
+[gd_scene load_steps=34 format=3 uid="uid://cy8bymex7ky6p"]
 
 [ext_resource type="Script" uid="uid://cp3mbh8h06ikg" path="res://Views/game_scene.gd" id="1_f1yp5"]
 [ext_resource type="PackedScene" uid="uid://b0bkkr2phnoad" path="res://Entities/Player/Player.tscn" id="2_2frau"]
@@ -8,7 +8,6 @@
 [ext_resource type="VoxelGIData" uid="uid://dc3317au1ji4s" path="res://Views/GameScene.VoxelGI_data.res" id="6_cl61b"]
 [ext_resource type="PackedScene" uid="uid://cf8jxvxrj5s1h" path="res://Entities/StreetProps/park_bench.tscn" id="7_nk1sn"]
 [ext_resource type="PackedScene" uid="uid://c1yha5o1t6fne" path="res://Entities/Utility/follow_camera.tscn" id="8_8f0fd"]
-[ext_resource type="PackedScene" uid="uid://bnr6yr3dmwv4l" path="res://Entities/Effects/bullet_strike.tscn" id="9_plkcx"]
 [ext_resource type="PackedScene" uid="uid://c0edmfiurjqro" path="res://Entities/Weapons/Physical/bat_physical.tscn" id="10_butjr"]
 [ext_resource type="Texture2D" uid="uid://s37lo3pt2ltw" path="res://Assets/Textures/sky_27_2k.png" id="11_xxmv1"]
 [ext_resource type="Script" uid="uid://dmc1lq5hpjfoq" path="res://Entities/UI Elements/hud.gd" id="12_n2voc"]
@@ -25,7 +24,6 @@
 [ext_resource type="PackedScene" uid="uid://dwgvt727pycct" path="res://Entities/heavytaur_2.tscn" id="22_688g8"]
 [ext_resource type="PackedScene" uid="uid://b33uqvkonguaq" path="res://Entities/Weapons/Physical/bazooka_physical.tscn" id="25_3d5bo"]
 [ext_resource type="PackedScene" uid="uid://dntwhjy00ix28" path="res://Entities/zombie_dog.tscn" id="30_5a2s5"]
-[ext_resource type="PackedScene" uid="uid://bfode8hbbqxqq" path="res://Entities/HealthCrate.tscn" id="30_jpnuu"]
 [ext_resource type="PackedScene" uid="uid://bkfhyiskcjd1c" path="res://Entities/StreetProps/health_pay_phone.tscn" id="31_nyj1n"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_wevbo"]
@@ -152,9 +150,6 @@ size = 30.0
 transform = Transform3D(-0.61562, 0.777702, -0.127242, 4.31378e-08, 0.161466, 0.986878, 0.788043, 0.607542, -0.0994018, 5, 1.24178, 1)
 
 [node name="FollowCamera" parent="SceneObjects" instance=ExtResource("8_8f0fd")]
-
-[node name="BulletStrike" parent="." instance=ExtResource("9_plkcx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 10.0
@@ -411,9 +406,6 @@ shape = SubResource("WorldBoundaryShape3D_g21l2")
 
 [node name="BazookaPhysical" parent="." instance=ExtResource("25_3d5bo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.43039, 1.2488, -5.91726)
-
-[node name="HealthCrate" parent="." instance=ExtResource("30_jpnuu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.50803, 3.23627, 9.27923)
 
 [node name="HealthPayPhone" parent="." instance=ExtResource("31_nyj1n")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.243, 1.06176, 4.364)
